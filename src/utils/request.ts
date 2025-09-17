@@ -23,7 +23,7 @@ service.interceptors.response.use(
     (response: AxiosResponse) => {
         const {status} = response;
         const {code} = response.data;
-        console.log(response, code);
+        console.log(response, status, code);
         if (status === 200 && code === 0) {
             return response.data;
         }

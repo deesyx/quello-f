@@ -8,9 +8,9 @@ const dataList = ref<Array<any>>([]);
 const dataTotal = ref(0);
 
 const getPageData = () => {
-  getQuestions({currentPage, pageSize}).then((res) => {
-    const {data} = res.data;
-    const {list, total} = data;
+  currentPage.value
+  getQuestions({pageNo: currentPage.value, pageSize: pageSize}).then((res) => {
+    const {list, total} = res.data;
     dataTotal.value = total;
     list.forEach((item: any) => {
       dataList.value.push(item);
@@ -34,7 +34,7 @@ initData();
     <ul class="agree-container" v-infinite-scroll="loadMore">
       <li class="agree-item" v-for="(item, index) in dataList" :key="index">
         <div class="main">
-          <span>{{item.title}}</span>
+          <span>{{ item.title }}</span>
         </div>
       </li>
     </ul>
