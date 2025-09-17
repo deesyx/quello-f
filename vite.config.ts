@@ -1,17 +1,16 @@
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import vue from "@vitejs/plugin-vue";
-import { resolve } from "path";
+import {resolve} from "path";
 
 export default defineConfig({
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "./src"),
+    plugins: [vue()],
+    resolve: {
+        alias: {
+            "@": resolve(__dirname, "./src"),
+        },
+        extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".vue"],
     },
-    //extensions: [".ts", ".js", ".vue", ".json", ".mjs"],
-    extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".vue"],
-  },
-  server: {
-    open: true
-  }
+    server: {
+        open: true
+    }
 });
