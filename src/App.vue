@@ -3,11 +3,9 @@ import QuestionMgr from '@/pages/QuestionMgr.vue'
 </script>
 
 <template>
-  <main>
-    <div class="wrapper">
-      <QuestionMgr/>
-    </div>
-  </main>
+  <div class="wrapper">
+    <QuestionMgr/>
+  </div>
 </template>
 
 <style scoped>
