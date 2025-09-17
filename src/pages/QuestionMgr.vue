@@ -34,7 +34,18 @@ initData();
     <ul class="agree-container" v-infinite-scroll="loadMore">
       <li class="agree-item" v-for="(item, index) in dataList" :key="index">
         <div class="main">
+          <span>{{ item.questionId }}</span>
           <span>{{ item.title }}</span>
+          <span>{{ item.productModule }}</span>
+          <span>{{ item.questionType }}</span>
+          <span>{{ item.severity }}</span>
+          <span>{{ item.status }}</span>
+          <span>{{ item.priority }}</span>
+          <span>{{ item.plannedResolutionDate }}</span>
+          <span>{{ item.actualResolutionDate }}</span>
+          <span>{{ item.reportedBy }}</span>
+          <span>{{ item.responsiblePerson }}</span>
+          <span>{{ item.createdAt }}</span>
         </div>
       </li>
     </ul>
