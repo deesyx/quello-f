@@ -34,7 +34,7 @@
             </svg>
           </div>
           <div class="stat-label">问题总数</div>
-          <div class="stat-value">{{ totalIssues }}</div>
+          <div class="stat-value">{{ totalquestions }}</div>
           <div class="stat-change positive">
             <span class="change-icon">↑</span> 12% 较上{{ selectedPeriod }}
           </div>
@@ -199,7 +199,7 @@
       <columnChart_Prod/>
       <columnChart_source/>
       <!-- <columnChart_report/> -->
-      <RankingReporter/>
+      <RankingreportedBy/>
     </div>
 
 
@@ -207,7 +207,7 @@
 
     <div class="charts-container">
       <!-- <ringChart/>
-      <RankingReporter/>
+      <RankingreportedBy/>
       <Ranking/> -->
 
       <div class="rate-container">
@@ -221,14 +221,14 @@
               <img src="@/assets/images/info.svg" alt="">
             </div>
             <div style="display: flex; flex-direction: column; gap:8px;">
-              <div class="rate-label">{{ issue.issueSummary }}</div>
+              <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
-                <div>责任人：{{ issue.assignee }}</div>
-                <div>{{ issue.plannedResolutionTime.toLocaleDateString('zh-CN') }}</div>
+                <div>责任人：{{ issue.responsiblePerson }}</div>
+                <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div>
               </div>
             </div>
           </div>
-          <div class="rate-state">已逾期 {{ Math.floor((Date.now() - new Date(issue.plannedResolutionTime).getTime()) / (1000 * 60 * 60 * 24)) }} 天</div>
+          <div class="rate-state">已逾期 {{ Math.floor((Date.now() - new Date(issue.plannedResolutionDate).getTime()) / (1000 * 60 * 60 * 24)) }} 天</div>
         </div>
       </div>
 
@@ -243,10 +243,10 @@
               <img src="@/assets/images/info.svg" alt="">
             </div>
             <div style="display: flex; flex-direction: column; gap:8px;">
-              <div class="rate-label">{{ issue.issueSummary }}</div>
+              <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
-                <div><i>user</i>{{ issue.assignee }}</div>
-                <div>{{ issue.plannedResolutionTime.toLocaleDateString('zh-CN') }}</div>
+                <div><i>user</i>{{ issue.responsiblePerson }}</div>
+                <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div>
               </div>
             </div>
           </div>
@@ -267,9 +267,9 @@
               <img src="@/assets/images/info.svg" alt="">
             </div>
             <div style="display: flex; flex-direction: column; gap:8px;">
-              <div class="rate-label">{{ issue.issueSummary }}</div>
+              <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
-                <div>责任人：{{ issue.assignee }}</div>
+                <div>责任人：{{ issue.responsiblePerson }}</div>
                 <div>{{ issue.reportTime.toLocaleDateString('zh-CN') }}</div>
               </div>
             </div>
@@ -288,7 +288,7 @@
 </template>
 
 <script setup lang="js" name="issues">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Select from 'primevue/select';
 import SelectButton from 'primevue/selectbutton';
 import DatePicker from 'primevue/datepicker';
@@ -300,8 +300,11 @@ const { mode } = storeToRefs(toolStore);
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, totalIssues, newIssue, solvedIssue, overdueIssue, overdue, newlyAdded, overdueWarn, adopt, top10 } = storeToRefs(dataStore);
+const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, totalquestions, newIssue, solvedIssue, overdueIssue, overdue, newlyAdded, overdueWarn, adopt, top10 } = storeToRefs(dataStore);
 
+onMounted(() => {
+  dataStore.getPageData();
+});
 // 处理产品选择变化
 const onProductChange = (value) => {
   console.log('Selected product:', value);
@@ -326,7 +329,7 @@ import enterOverview from '../components/chart/enterOverview.vue';
 import ringChart_value from '@/components/chart/ringChart_value.vue';
 import Top10  from '@/components/chart/Top10.vue';
 import Ranking  from '@/components/chart/Ranking.vue';
-import RankingReporter  from '@/components/chart/RankingReporter.vue';
+import RankingReporter from '@/components/chart/RankingReporter.vue';
 import columnChart_report  from '@/components/chart/columnChart_report.vue';
 </script>
 

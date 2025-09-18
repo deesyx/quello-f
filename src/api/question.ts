@@ -1,9 +1,17 @@
-import request from "@/utils/request";
-import type {PageParam} from "@/types/page";
+import http from "@/utils/request";
+import type {PageParam, QuestionDetail} from "@/types/page";
 
 export const getQuestions = (req: PageParam) => {
-    return request<any>({
+    return http<any>({
         url: `/questions/search`,
+        method: "post",
+        data: req
+    });
+};
+
+export const createQuestion = (req: QuestionDetail) => {
+    return http<any>({
+        url: `/questions/creation`,
         method: "post",
         data: req
     });

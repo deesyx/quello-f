@@ -65,8 +65,8 @@ const columns = ref([
   },
   // {
   //   title: '报告组',
-  //   dataIndex: 'reporterGroup',
-  //   sorter: (a, b) => a.reporterGroup.localeCompare(b.reporterGroup),
+  //   dataIndex: 'reportedByGroup',
+  //   sorter: (a, b) => a.reportedByGroup.localeCompare(b.reportedByGroup),
   // },
   {
     title: '优先级',

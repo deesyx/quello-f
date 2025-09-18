@@ -17,13 +17,13 @@ import { renderBarChart } from '@/stores/graph';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { impactRating } = storeToRefs(dataStore);
+const { severity } = storeToRefs(dataStore);
 
 let chart;
 const container = ref(null);
 
 onMounted(() => {
-    chart = renderBarChart(container.value, impactRating.value, "严重等级分布", isLight.value);
+    chart = renderBarChart(container.value, severity.value, "严重等级分布", isLight.value);
 });
 
 onUnmounted(() => {

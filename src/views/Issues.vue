@@ -2,18 +2,24 @@
   <main>
     开发中...
     <button @click="getData">测试</button>
+    <button @click="createQuestion">新建问题</button>
+    <!-- <div>{{ questions }}</div> -->
     <IssueTable/>
   </main>
 </template>
 
 <script setup lang="ts" name="home">
 import { useDataStore } from '@/stores/data';
+const dataStore = useDataStore();
+const {questions} = dataStore;
 function getData() {
-  const dataStore = useDataStore();
   dataStore.getPageData();
 }
 import IssueTable from '@/components/chart/IssueTable.vue';
 
+function createQuestion() {
+  dataStore.createQuestion();
+}
 </script>
 
 <style lang="scss" scoped>

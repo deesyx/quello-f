@@ -14,7 +14,7 @@ import { renderColumnChart } from '@/stores/graph';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { issueType } = storeToRefs(dataStore);
+const { questionType } = storeToRefs(dataStore);
 
 let chart;
 const container = ref(null);
@@ -22,7 +22,7 @@ import { useToolStore } from '@/stores/util';
 const toolStore = useToolStore();
 const { isLight } = storeToRefs(toolStore);
 onMounted(() => {
-    chart = renderColumnChart(container.value, issueType.value, "问题类型分布", isLight.value);
+    chart = renderColumnChart(container.value, questionType.value, "问题类型分布", isLight.value);
 });
 
 onUnmounted(() => {

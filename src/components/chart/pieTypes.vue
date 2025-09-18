@@ -11,7 +11,7 @@
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { issueType } = storeToRefs(dataStore);
+const { questionType } = storeToRefs(dataStore);
 
 
 
@@ -74,7 +74,7 @@ function renderBarChart(container) {
       style: { radius: 4, inset: 1 },
     })
     .interval()
-    .data(issueType)
+    .data(questionType)
     .transform({ type: 'sortX', by: 'y', reverse: true }) // 按Y值排序X轴
     .transform({ type: 'stackY' })
     .encode('y', 'value')
