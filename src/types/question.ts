@@ -48,9 +48,32 @@ export interface PageResult<T> {
 // Define a type for the response data
 export interface Question {
   // Add actual properties based on your API response
-  id: number;
+  id?: number;
+  questionId?: string;
   title: string;
-  // ... other fields
+  content: string;
+  productModule?: string;
+  page?: string;
+  questionType?: string;
+  severity?: string;
+  status?: string;
+  priority?: string;
+  plannedResolutionDate?: Date;
+  actualResolutionDate?: Date;
+  reportedBy?: string;
+  reportedByGroup?: string;
+  responsiblePerson?: string;
+  responsiblePersonGroup?: string;
+  version?: string;
+  includedInLibrary?: boolean;
+  screenshotUrl?: string[];
+  optimizationSuggestion?: string;
+  solution?: string;
+  source?: string;
+  tag?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  '验收情况'?: string;
 }
 
 export interface GetQuestionsResponse {

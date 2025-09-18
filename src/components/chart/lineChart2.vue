@@ -11,7 +11,7 @@ import { renderLineChart } from '@/stores/graph';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { reportTime } = storeToRefs(dataStore);
+const { createdAt } = storeToRefs(dataStore);
 
 import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -23,7 +23,7 @@ let chart;
 const container = ref(null);
 
 onMounted(() => {
-    chart = renderLineChart(container.value, reportTime.value, '新增问题趋势', isLight.value);
+    chart = renderLineChart(container.value, createdAt.value, '新增问题趋势', isLight.value);
 });
 
 onUnmounted(() => {

@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 // import { getQuestionDetail, searchQuestions  } from '@/api/question';
-// import type { QuestionDetail, QuestionSearchReq } from '@/types/question';
+import type { Question, QuestionDetail, QuestionSearchReq } from '@/types/question';
 import {getQuestions,createQuestion} from "@/api/question";
 
 export const useDataStore = defineStore('data', {
@@ -24,25 +24,34 @@ export const useDataStore = defineStore('data', {
         result: [], // 筛选结果
 
         // 问题列表
-        // questions:[],
-        //{
-        //     "id": 1,
-        //     "questionId": "Q20250315001",
-        //     "title": "登录按钮点击无响应",
-        //     "content": "在Chrome浏览器下，点击登录按钮后无任何反应，控制台显示JS错误：Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')",
-        //     "productModule": "用户中心",
-        //     "questionType": "FUNCTION",
-        //     "severity": "MEDIUM",
-        //     "status": "COMPLETED",
-        //     "priority": "P0",
-        //     "plannedResolutionDate": "2025-03-20",
-        //     "actualResolutionDate": "2025-03-18",
-        //     "reportedBy": "张伟",
-        //     "responsiblePerson": "李娜",
-        //     "version": 2,
-        //     "createdAt": "2025-03-15T09:15:22",
-        //     "updatedAt": "2025-09-16T13:50:22"
-        // }
+        // questions:[
+        //   {
+        //     id: '1',
+        //     productModule: '用户中心',
+        //     page: '登录页面',
+        //     title: '登录按钮点击无响应',
+        //     content: '在移动设备上，当用户输入正确的账号密码后，点击登录按钮没有任何反应。需要多次点击才能成功登录。',
+        //     questionType: '功能问题',
+        //     severity: '高',
+        //     reportedBy: '张三',
+        //     reportedByGroup: '用户体验组',
+        //     priority: 'P1',
+        //     responsiblePerson: '李四',
+        //     responsiblePersonGroup: '前端开发组',
+        //     status: '已完成',
+        //     createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        //     plannedResolutionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        //     actualResolutionDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
+        //     includedInLibrary: true,
+        //     screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=login%20button%20unresponsive%20mobile&sign=4e839cb75736e02bd8a23836e4440b58',
+        //     optimizationSuggestion: '优化按钮点击区域大小，增加点击反馈',
+        //     solution: '修复了按钮点击事件绑定问题，增加了加载状态提示',
+        //     // '验收情况': '问题已修复，点击响应正常，用户体验良好',
+        //     source: '用户反馈',
+        //     tag: '最佳实践',
+        //   },
+        // ],
+
         questions: [
             {
                 id: '1',
@@ -59,7 +68,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '李四',
                 responsiblePersonGroup: '前端开发组',
                 status: '已完成',
-                reportTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
                 includedInLibrary: true,
@@ -85,7 +94,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '钱七',
                 responsiblePersonGroup: '前端开发组',
                 status: '处理中',
-                reportTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=verification%20code%20input%20focus%20issue&sign=19b18f391aacb7dd9fdcfe94a8adaf62',
@@ -110,7 +119,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '李四',
                 responsiblePersonGroup: '前端开发组',
                 status: '待处理',
-                reportTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=avatar%20preview%20not%20updating&sign=dd573d5019d42ff75247d9c314d78275',
@@ -137,7 +146,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '赵六',
                 responsiblePersonGroup: '前端开发组',
                 status: '处理中',
-                reportTime: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=product%20list%20loading%20slow&sign=db9951553a9a04272845166817f45cc2',
@@ -163,7 +172,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '赵六',
                 responsiblePersonGroup: '前端开发组',
                 status: '验收中',
-                reportTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 12 * 60 * 60 * 1000),
                 includedInLibrary: false,
@@ -189,7 +198,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '吴十',
                 responsiblePersonGroup: '前端开发组',
                 status: '已完成',
-                reportTime: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
                 includedInLibrary: true,
@@ -217,7 +226,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '钱七',
                 responsiblePersonGroup: '前端开发组',
                 status: '处理中',
-                reportTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 12 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=cart%20total%20price%20not%20updating&sign=5b63f209db075d0dcac867c3df68abba',
@@ -243,7 +252,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '吴十',
                 responsiblePersonGroup: '前端开发组',
                 status: '已完成',
-                reportTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 11 * 24 * 60 * 60 * 1000),
                 includedInLibrary: true,
@@ -272,7 +281,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '郑十一',
                 responsiblePersonGroup: '后端开发组',
                 status: '处理中',
-                reportTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=order%20status%20filter%20not%20working&sign=192f6c53e05ed031123bc899bde1bbda',
@@ -297,7 +306,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '郑十一',
                 responsiblePersonGroup: '后端开发组',
                 status: '待处理',
-                reportTime: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=logistics%20information%20not%20updating&sign=36f400e2a835bb8f8ff11a78e98e4af5',
@@ -324,7 +333,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '钱七',
                 responsiblePersonGroup: '前端开发组',
                 status: '已关闭',
-                reportTime: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 17 * 24 * 60 * 60 * 1000),
                 includedInLibrary: true,
@@ -351,7 +360,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '郑十一',
                 responsiblePersonGroup: '后端开发组',
                 status: '处理中',
-                reportTime: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=payment%20success%20redirect%20delay&sign=a2ee61e608d179dc30eebf787270f36a',
@@ -378,7 +387,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '郑十一',
                 responsiblePersonGroup: '后端开发组',
                 status: '待处理',
-                reportTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=search%20results%20irrelevant&sign=31108625145f4b9d408db848c3109494',
@@ -404,7 +413,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '吴十',
                 responsiblePersonGroup: '前端开发组',
                 status: '处理中',
-                reportTime: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=search%20history%20cannot%20delete&sign=388e0787638ad9e98c183b87c6a459bc',
@@ -432,7 +441,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '赵六',
                 responsiblePersonGroup: '前端开发组',
                 status: '已完成',
-                reportTime: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 13 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000),
                 includedInLibrary: true,
@@ -459,7 +468,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '孙八',
                 responsiblePersonGroup: '运营组',
                 status: '已完成',
-                reportTime: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
                 includedInLibrary: true,
@@ -489,7 +498,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '钱七',
                 responsiblePersonGroup: '前端开发组',
                 status: '待评审',
-                reportTime: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=unread%20message%20indicator%20stuck&sign=2cf38ff1f2ca7c3917e2f3d0de308de8',
@@ -516,7 +525,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '吴十',
                 responsiblePersonGroup: '前端开发组',
                 status: '验收中',
-                reportTime: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
@@ -544,7 +553,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '钱七',
                 responsiblePersonGroup: '前端开发组',
                 status: '已关闭',
-                reportTime: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() - 23 * 24 * 60 * 60 * 1000),
                 actualResolutionDate: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000),
                 includedInLibrary: true,
@@ -572,7 +581,7 @@ export const useDataStore = defineStore('data', {
                 responsiblePerson: '吴十',
                 responsiblePersonGroup: '前端开发组',
                 status: '处理中',
-                reportTime: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+                createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
                 plannedResolutionDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
                 includedInLibrary: false,
                 screenshotUrl: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=dark%20mode%20text%20visibility&sign=0f96ffa432bcb593c7a0d58235ad6bc8',
@@ -643,7 +652,7 @@ export const useDataStore = defineStore('data', {
         ],
 
         // 日期
-        reportTime: (state) => {
+        createdAt: (state) => {
           const currentYear = new Date().getFullYear();
           const result = [];
           
@@ -656,7 +665,7 @@ export const useDataStore = defineStore('data', {
             result.push({
               '日期': `${startDate.getMonth() + 1}月`,
               '数量': state.questions.filter(issue => {
-                const reportDate = new Date(issue.reportTime);
+                const reportDate = new Date(issue.createdAt);
                 return reportDate >= startDate && reportDate < endDate;
               }).length
             });
@@ -714,7 +723,7 @@ export const useDataStore = defineStore('data', {
         latestquestions: (state) => {
           // 创建副本避免修改原始数组，然后按报告时间从新到旧排序，取前10个
           return [...state.questions]
-            .sort((a, b) => new Date(b.reportTime).getTime() - new Date(a.reportTime).getTime())
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
             .slice(0, 10);
         },
 
@@ -723,8 +732,8 @@ export const useDataStore = defineStore('data', {
           return state.questions
             // .filter(issue => issue.status === '待处理' || issue.status === '待评审')
             .sort((a, b) => {
-              const dateA = new Date(a.reportTime).getTime();
-              const dateB = new Date(b.reportTime).getTime();
+              const dateA = new Date(a.createdAt).getTime();
+              const dateB = new Date(b.createdAt).getTime();
               return dateB - dateA;
             })
             .slice(0, 8);

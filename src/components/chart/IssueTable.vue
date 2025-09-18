@@ -29,7 +29,7 @@ import Column from 'primevue/column';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { issues, questions } = storeToRefs(dataStore);
+const { questions } = storeToRefs(dataStore);
 
 // 表格列定义
 const columns = ref([
@@ -87,14 +87,14 @@ const columns = ref([
 
 
 
-function getData() {
-  const dataStore = useDataStore();
-  dataStore.getPageData();
-}
+// function getData() {
+//   const dataStore = useDataStore();
+//   dataStore.getPageData();
+// }
 
-onMounted(() => {
-  getData();
-});
+// onMounted(() => {
+//   getData();
+// });
 
 </script>
 

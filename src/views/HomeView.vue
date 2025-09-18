@@ -224,7 +224,8 @@
               <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
                 <div>责任人：{{ issue.responsiblePerson }}</div>
-                <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div>
+                <!-- <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div> -->
+                <div>{{ issue.plannedResolutionDate }}</div>
               </div>
             </div>
           </div>
@@ -246,7 +247,8 @@
               <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
                 <div><i>user</i>{{ issue.responsiblePerson }}</div>
-                <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div>
+                <!-- <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div> -->
+                <div>{{ issue.plannedResolutionDate }}</div>
               </div>
             </div>
           </div>
@@ -270,7 +272,8 @@
               <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
                 <div>责任人：{{ issue.responsiblePerson }}</div>
-                <div>{{ issue.reportTime.toLocaleDateString('zh-CN') }}</div>
+                <!-- <div>{{ issue.createdAt.toLocaleDateString('zh-CN') }}</div> -->
+                <div>{{ issue.createdAt }}</div>
               </div>
             </div>
           </div>
