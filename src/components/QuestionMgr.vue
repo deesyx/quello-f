@@ -52,7 +52,6 @@ onMounted(() => {
                :first="currentPage * rowsPerPage"
                @page="onPage($event)"
                scrollable
-               scrollHeight="400px"
                scrollDirection="both"
                tableStyle="min-width:50rem;"
                style="width: 100%">
