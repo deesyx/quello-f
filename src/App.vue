@@ -1,10 +1,10 @@
 <script setup>
-import QuestionMgr from '@/components/QuestionTable.vue'
+import QuestionTable from '@/components/QuestionTable.vue'
 </script>
 
 <template>
   <div class="wrapper">
-    <QuestionMgr/>
+    <QuestionTable/>
   </div>
 </template>
 
