@@ -2,25 +2,7 @@
   <main>
     开发中...
     <button @click="getData">测试</button>
-    <!-- <div>{{ dataList }}</div>
-    <ul>
-      <li v-for="(item, index) in dataList" :key="index">
-        <div>
-          <span>{{ item.questionId }}</span>
-          <span>{{ item.title }}</span>
-          <span>{{ item.productModule }}</span>
-          <span>{{ item.questionType }}</span>
-          <span>{{ item.severity }}</span>
-          <span>{{ item.status }}</span>
-          <span>{{ item.priority }}</span>
-          <span>{{ item.plannedResolutionDate }}</span>
-          <span>{{ item.actualResolutionDate }}</span>
-          <span>{{ item.reportedBy }}</span>
-          <span>{{ item.responsiblePerson }}</span>
-          <span>{{ item.createdAt }}</span>
-        </div>
-      </li>
-    </ul> -->
+    <IssueTable/>
   </main>
 </template>
 
@@ -30,38 +12,8 @@ function getData() {
   const dataStore = useDataStore();
   dataStore.getPageData();
 }
+import IssueTable from '@/components/chart/IssueTable.vue';
 
-
-
-// import {ref} from "vue";
-// import {getQuestions} from "@/api/question";
-// // import type {GetQuestionsResponse} from "@/types/question";
-
-// const currentPage = ref(1);
-// const pageSize = 10;
-// const dataList = ref<Array<any>>([]);
-// const dataTotal = ref(0);
-
-// const getPageData = () => {
-//   getQuestions({pageNo: currentPage.value, pageSize: pageSize}).then((res) => {
-//     const {list, total} = res.data.data;
-//     dataTotal.value = total;
-//     dataList.value = list;
-//     console.log(res.data.data.list);
-//   });
-// };
-
-// const initData = () => {
-//   getPageData();
-// };
-
-// // 添加分页处理函数
-// const handlePageChange = (page: number) => {
-//   currentPage.value = page;
-//   getPageData();
-// };
-
-// initData();
 </script>
 
 <style lang="scss" scoped>
@@ -70,9 +22,9 @@ function getData() {
 main {
   width: 100%;
   padding: 60px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 40px;
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  // gap: 40px;
   box-sizing: border-box;
   // overflow-y: auto;
   max-height: calc(100vh - 60px);

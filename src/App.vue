@@ -59,7 +59,9 @@
               <path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          
+          <div>
+            {{ $route.name }}
+          </div>
           <div class="theme-toggle">
             <a href="#" @click="toggleMode">
               <div class="user-img-box" v-if="mode">

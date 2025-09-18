@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue';
+// import HomeView from '@/views/HomeView.vue';
 
 // Vue module augmentation moved to global declaration file
 // See: https://vuejs.org/guide/typescript/overview.html#general-usage-notes
@@ -9,7 +9,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: '数据看板',
       component: () => import('@/views/HomeView.vue'),
     },
     {
@@ -27,7 +27,7 @@ const router = createRouter({
     },
     {
       path: '/issues',
-      name: 'issues',
+      name: '问题管理',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
