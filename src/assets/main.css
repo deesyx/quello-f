@@ -1,0 +1,209 @@
+:root {
+  --bg-color: #ffffff;
+  --page-bg-color: #0F172A;
+  --text-color: #333333;
+  --text-color-secondary: #555555;
+  --primary-color: #007bff;
+  --nav-bg: #f8f9fa;
+  --chart-grid: #e9ecef;
+  --link-color: #2563EB;
+  --link-color-hover:#1a52cb;
+
+  --dt-header-bg: #f8f9fa;
+  --dt-header-text: #333;
+  --dt-row-bg: #ffffff;
+  --dt-row-alt-bg: #f2f2f2;
+  --dt-border: #dee2e6;
+  --dt-text: #495057;
+
+
+}
+/* 浅色模式 */
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --page-bg-color: #F8FAFC;
+  --text-color: #333333;
+  --text-color-secondary: #555555;
+  --primary-color: #2563EB;
+  --nav-bg: #f8f9fa;
+  --chart-grid: #e9ecef;
+  --link-color: #2563EB;
+  --link-color-hover:#1a52cb;
+
+  --dt-header-bg: #f8f9fa;
+  --dt-header-text: #333;
+  --dt-row-bg: #ffffff;
+  --dt-row-alt-bg: #f2f2f2;
+  --dt-border: #dee2e6;
+  --dt-text: #495057;
+
+
+}
+
+/* 暗黑模式 */
+[data-theme="dark"] {
+  --bg-color: #1E293B;
+  --page-bg-color: #0F172A;
+  --text-color: #f0f0f0;
+  --text-color-secondary: #929292;
+  --primary-color: #5e8dff;
+  --nav-bg: #1a1a1a;
+  --chart-grid: #2d2d2d;
+  --link-color: #2563EB;
+  --link-color-hover:#3270f7;
+
+  --dt-header-bg: #2c3e50;
+  --dt-header-text: #f0f0f0;
+  --dt-row-bg: #1a1a1a;
+  --dt-row-alt-bg: #252525;
+  --dt-border: #444;
+  --dt-text: #e0e0e0;
+  
+}
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --p-datatable-header-bg: #1f2937;
+    --p-datatable-header-text-color: #e5e7eb;
+    --p-datatable-body-row-bg: #374151;
+    --p-datatable-body-row-text-color: #f3f4f6;
+  }
+} */
+
+
+/* || 通用样式 */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body{
+  margin:0;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  width: 100vw;
+  height: 100%;
+
+  /* Removed overflow: hidden to allow scrolling as per requirements */
+  
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+h1, h2, h3, h4 {
+  font-family: 'Microsoft YaHei';
+}
+
+.app,
+.main-content, 
+.main-content-home{
+  /* background: 
+      linear-gradient(238deg, #F6F3FF 0%, #DEEEFF 100%),
+      url('@/assets/images/homepageBG-decoration.svg'); */
+  height: 100%;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+a:hover {
+  color:#111;
+}
+
+/* || 表单通用 */
+button,
+input,
+select,
+textarea,
+fieldset {
+/* 需要在基于 WebKit 的浏览器上对表单元素进行恰当的样式设置 */
+/* -webkit-appearance: none;
+appearance: none; */
+
+  font-family: inherit;
+  font-size: 0.875em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+legend {
+  color: #363D62;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  border: 0;
+}
+
+button:hover,
+a:hover {
+  cursor: pointer;
+}
+
+
+ul li{
+  list-style-type: none;
+}
+
+
+/* 滚动条样式 */
+/* 全局滚动条样式 */
+::-webkit-scrollbar {
+  position: absolute;
+  right: -10px;
+  width: 8px; /* 垂直滚动条的宽度 */
+  height: 8px; /* 水平滚动条的高度 */
+}
+
+/* 滚动条轨道样式 */
+::-webkit-scrollbar-track {
+  background: none; /* 轨道颜色 */
+}
+
+/* 滚动条滑块样式 */
+::-webkit-scrollbar-thumb {
+  background: rgb(175, 168, 194, 0.5); /* 滑块颜色 */
+  border-radius: 6px; /* 滑块圆角 */
+}
+
+/* 滑块 hover 样式 */
+::-webkit-scrollbar-thumb:hover {
+  background: #AFA8C2; /* 滑块 hover 时的颜色 */
+}
+
+
+
+
+/*顶部栏以下的网格布局*/
+.sidebar-and-content-layout {
+  /* display: grid; */
+  /* grid-template-columns: 112px 296px auto; 三列的宽度 */
+  /* grid-gap: 0; */
+
+  display: flex;
+
+  background: linear-gradient(180deg, #EEEDF2 0%, #FFFFFF 100%);
+  
+  margin-top: 60px;
+  /* height: calc(100% - 80px); */
+
+  height:100vh;
+}

@@ -1,0 +1,29 @@
+
+.chart-card {
+    background: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    min-width: 420px;
+    overflow: hidden;
+    height: 100%;
+
+    /* display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative; */
+}
+
+.chart-card h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    color: var(--text-color);
+}
+
+button {
+    color: #fff;
+    background-color: #1E75FF;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
