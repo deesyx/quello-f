@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {getQuestions} from "@/api/question";
-import DataTable from 'primevue/datatable';
+import DataTable, {DataTablePageEvent} from 'primevue/datatable';
 import Column from 'primevue/column';
-import {PageEvent} from "@/type/page.ts";
 
 const questions = ref<Array<any>>([]);
 const currentPage = ref<number>(0);
 const rowsPerPage = ref<number>(10);
 const totalRecords = ref<number>(0);
 
-const onPage = (event: PageEvent): void => {
+const onPage = (event: DataTablePageEvent): void => {
   currentPage.value = event.page;
-  rowsPerPage.value = event.rows;
   loadData(event.page + 1, event.rows);
 };
 
@@ -50,8 +48,14 @@ onMounted(() => {
                :paginator="true"
                :rows="rowsPerPage"
                :totalRecords="totalRecords"
+               :lazy="true"
+               :first="currentPage * rowsPerPage"
                @page="onPage($event)"
-               scrollable scrollHeight="400px" scrollDirection="both" tableStyle="min-width:50rem;" style="width: 100%">
+               scrollable
+               scrollHeight="400px"
+               scrollDirection="both"
+               tableStyle="min-width:50rem;"
+               style="width: 100%">
       <Column header="问题ID" field="questionId"/>
       <Column header="标题" field="title"/>
       <Column header="内容" field="content"/>
