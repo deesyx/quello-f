@@ -1,5 +1,5 @@
 <script setup>
-import QuestionMgr from '@/pages/QuestionMgr.vue'
+import QuestionMgr from '@/components/QuestionMgr.vue'
 </script>
 
 <template>
