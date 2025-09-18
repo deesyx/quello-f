@@ -48,17 +48,17 @@ initData();
         </div>
       </li>
     </ul>
-    
-    <!-- 添加分页组件 -->
-    <div class="pagination-container">
-      <el-pagination
+  </div>
+
+  <!-- 添加分页组件 -->
+  <div class="pagination-container">
+    <el-pagination
         @current-change="handlePageChange"
         :current-page="currentPage"
         :page-size="pageSize"
         :total="dataTotal"
         layout="prev, pager, next"
-      />
-    </div>
+    />
   </div>
 </template>
 
