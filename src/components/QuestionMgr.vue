@@ -58,7 +58,6 @@ onMounted(() => {
                style="width: 100%">
       <Column header="问题ID" field="questionId"/>
       <Column header="标题" field="title"/>
-      <Column header="内容" field="content"/>
       <Column header="产品模块" field="productModule"/>
       <Column header="问题类型" field="questionType"/>
       <Column header="严重等级" field="severity"/>
