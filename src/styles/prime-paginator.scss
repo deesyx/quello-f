@@ -59,6 +59,12 @@ $disabled-opacity: 0.6;
       opacity: $disabled-opacity;
       cursor: not-allowed;
     }
+
+    &.p-paginator-page-selected {
+      background: $btn-hover;
+      color: #6c757d;
+      border-color: $btn-hover;
+    }
   }
 
   .p-paginator-current {
@@ -68,7 +74,9 @@ $disabled-opacity: 0.6;
 }
 
 /* 主题类 —— 想用哪种就加哪种 */
-.paginator-blue { @include paginator-theme; }
+.paginator-blue {
+  @include paginator-theme;
+}
 
 .paginator-green {
   $active-bg: #198754;
