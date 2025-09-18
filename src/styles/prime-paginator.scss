@@ -1,0 +1,88 @@
+/* 变量区域 —— 改这里即可一键换肤 */
+$paginator-bg: #f8f9fa !default;
+$paginator-border: #dee2e6 !default;
+$btn-border: #ced4da !default;
+$btn-color: #495057 !default;
+$btn-hover: #e9ecef !default;
+$active-bg: #0d6efd !default;
+$active-color: #ffffff !default;
+$disabled-opacity: 0.6;
+
+/* 混合器：生成完整分页器样式 */
+@mixin paginator-theme {
+  .p-paginator {
+    background: $paginator-bg;
+    border: 1px solid $paginator-border;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .p-paginator-pages,
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last {
+    display: flex;
+    gap: 0.125rem;
+  }
+
+  .p-paginator-page,
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last {
+    border: 1px solid $btn-border;
+    color: $btn-color;
+    min-width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+
+    &:hover:not(.p-highlight):not(.p-disabled) {
+      background: $btn-hover;
+    }
+
+    &.p-highlight {
+      background: $active-bg;
+      color: $active-color;
+      border-color: $active-bg;
+    }
+
+    &.p-disabled {
+      opacity: $disabled-opacity;
+      cursor: not-allowed;
+    }
+  }
+
+  .p-paginator-current {
+    color: #6c757d;
+    margin: 0 0.5rem;
+  }
+}
+
+/* 主题类 —— 想用哪种就加哪种 */
+.paginator-blue { @include paginator-theme; }
+
+.paginator-green {
+  $active-bg: #198754;
+  $active-color: #fff;
+  @include paginator-theme;
+}
+
+.paginator-dark {
+  $paginator-bg: #212529;
+  $paginator-border: #343a40;
+  $btn-border: #495057;
+  $btn-color: #dee2e6;
+  $btn-hover: #343a40;
+  $active-bg: #0d6efd;
+  $active-color: #fff;
+  @include paginator-theme;
+}

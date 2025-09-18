@@ -43,7 +43,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <DataTable class="custom-datatable"
+    <DataTable class="paginator-blue"
                :value="questions"
                :paginator="true"
                :rows="rowsPerPage"
@@ -51,7 +51,6 @@ onMounted(() => {
                :lazy="true"
                :first="currentPage * rowsPerPage"
                @page="onPage($event)"
-               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
                currentPageReportTemplate="{first}-{last} of {totalRecords}"
                scrollable
                scrollDirection="both"
@@ -74,51 +73,5 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.custom-datatable {
-  :deep(.p-paginator) {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-  }
-  
-  :deep(.p-paginator .p-paginator-pages .p-paginator-page) {
-    border: 1px solid #ced4da;
-    color: #495057;
-    margin: 0 0.125rem;
-    
-    &.p-highlight {
-      background: #0d6efd;
-      color: #ffffff;
-      border-color: #0d6efd;
-    }
-    
-    &:hover:not(.p-highlight) {
-      background: #e9ecef;
-    }
-  }
-  
-  :deep(.p-paginator .p-paginator-first,
-        .p-paginator .p-paginator-prev,
-        .p-paginator .p-paginator-next,
-        .p-paginator .p-paginator-last) {
-    border: 1px solid #ced4da;
-    color: #495057;
-    margin: 0 0.125rem;
-    
-    &:hover {
-      background: #e9ecef;
-    }
-    
-    &.p-disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-  }
-  
-  :deep(.p-paginator .p-paginator-current) {
-    color: #6c757d;
-    margin: 0 0.5rem;
-  }
-}
+
 </style>
