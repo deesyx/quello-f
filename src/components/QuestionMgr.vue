@@ -1,64 +1,71 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {getQuestions} from "@/api/question";
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import {PageEvent} from "@/type/page.ts";
 
-const currentPage = ref(1);
-const pageSize = 10;
-const dataList = ref<Array<any>>([]);
-const dataTotal = ref(0);
+const questions = ref<Array<any>>([]);
+const currentPage = ref<number>(0);
+const rowsPerPage = ref<number>(10);
+const totalRecords = ref<number>(0);
 
-const getPageData = () => {
-  getQuestions({pageNo: currentPage.value, pageSize: pageSize}).then((res) => {
+const onPage = (event: PageEvent): void => {
+  currentPage.value = event.page;
+  rowsPerPage.value = event.rows;
+  loadData(event.page + 1, event.rows);
+};
+
+const loadData = (page: number, limit: number) => {
+  getQuestions({pageNo: page, pageSize: limit}).then((res) => {
     const {list, total} = res.data;
-    dataTotal.value = total;
-    dataList.value = list;
+    totalRecords.value = total;
+    questions.value = list;
   });
 };
 
-const initData = () => {
-  getPageData();
-};
+onMounted(() => {
+  loadData(1, rowsPerPage.value);
+});
 
-// 添加分页处理函数
-const handlePageChange = (page: number) => {
-  currentPage.value = page;
-  getPageData();
-};
-
-initData();
 </script>
 
 <template>
-  <div>
-    <ul>
-      <li v-for="(item, index) in dataList" :key="index">
-        <div>
-          <span>{{ item.questionId }}</span>
-          <span>{{ item.title }}</span>
-          <span>{{ item.productModule }}</span>
-          <span>{{ item.questionType }}</span>
-          <span>{{ item.severity }}</span>
-          <span>{{ item.status }}</span>
-          <span>{{ item.priority }}</span>
-          <span>{{ item.plannedResolutionDate }}</span>
-          <span>{{ item.actualResolutionDate }}</span>
-          <span>{{ item.reportedBy }}</span>
-          <span>{{ item.responsiblePerson }}</span>
-          <span>{{ item.createdAt }}</span>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <div class="card">
+    <div class="table-header">
+      <h3>问题总览列表</h3>
+      <div class="table-controls">
 
-  <!-- 添加分页组件 -->
-  <div class="pagination-container">
-    <el-pagination
-        @current-change="handlePageChange"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :total="dataTotal"
-        layout="prev, pager, next"
-    />
+        <!-- <IconField>
+                <InputIcon>
+                    <i class="pi pi-search" />
+                </InputIcon>
+                <InputText v-model="searchText" placeholder="Keyword Search" />
+            </IconField> -->
+      </div>
+    </div>
+
+    <DataTable class="custom-datatable"
+               :value="questions"
+               :paginator="true"
+               :rows="rowsPerPage"
+               :totalRecords="totalRecords"
+               @page="onPage($event)"
+               scrollable scrollHeight="400px" scrollDirection="both" tableStyle="min-width:50rem;" style="width: 100%">
+      <Column header="问题ID" field="questionId"/>
+      <Column header="标题" field="title"/>
+      <Column header="内容" field="content"/>
+      <Column header="产品模块" field="productModule"/>
+      <Column header="问题类型" field="questionType"/>
+      <Column header="严重等级" field="severity"/>
+      <Column header="当前状态" field="status"/>
+      <Column header="优先级" field="priority"/>
+      <Column header="计划解决时间" field="plannedResolutionDate"/>
+      <Column header="实际解决时间" field="actualResolutionDate"/>
+      <Column header="提出人" field="reportedBy"/>
+      <Column header="责任人" field="responsiblePerson"/>
+      <Column header="创建时间" field="createdAt"/>
+    </DataTable>
   </div>
 </template>
 
