@@ -62,7 +62,7 @@ initData();
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .pagination-container {
   display: flex;
   justify-content: center;
