@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import ElementPlus from "element-plus";
 import PrimeVue from 'primevue/config';
 import App from '@/App.vue'
+import '@/styles/paginator.css';
 
 const app = createApp(App);
 

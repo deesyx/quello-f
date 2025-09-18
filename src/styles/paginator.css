@@ -1,0 +1,28 @@
+.quello-pages,
+.quello-nav {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.quello-page-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #374151;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quello-page-btn:hover {
+    background: #f3f4f6;
+}
+
+.quello-page-btn-active {
+    background: #3b82f6;
+    color: #fff;
+    border-color: #3b82f6;
+}

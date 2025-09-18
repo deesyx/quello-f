@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {getQuestions} from "@/api/question";
-import DataTable, {DataTablePageEvent} from 'primevue/datatable';
-import Column from 'primevue/column';
+import DataTable, {DataTablePageEvent} from "primevue/datatable";
+import Column from "primevue/column";
+import {paginatorTemplate} from "@/components/PaginatorTemplate";
 
 const questions = ref<Array<any>>([]);
 const currentPage = ref<number>(0);
@@ -50,6 +51,7 @@ onMounted(() => {
                :totalRecords="totalRecords"
                :lazy="true"
                :first="currentPage * rowsPerPage"
+               :paginatorTemplate="paginatorTemplate"
                @page="onPage($event)"
                scrollable
                scrollDirection="both"
@@ -72,9 +74,4 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
 </style>
