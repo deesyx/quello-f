@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 import {getQuestions} from "@/api/question";
 import DataTable, {DataTablePageEvent} from "primevue/datatable";
 import Column from "primevue/column";
+import {QuestionSearchReq} from "@/type/question.ts";
 
 const questions = ref<Array<any>>([]);
 const currentPage = ref<number>(0);
@@ -11,11 +12,18 @@ const totalRecords = ref<number>(0);
 
 const onPage = (event: DataTablePageEvent): void => {
   currentPage.value = event.page;
-  loadData(event.page + 1, event.rows);
+  const searchReq: QuestionSearchReq = {
+    title: "",
+    status: "",
+    questionType: "",
+    pageNo: event.page + 1,
+    pageSize: event.rows
+  };
+  loadData(searchReq);
 };
 
-const loadData = (page: number, limit: number) => {
-  getQuestions({pageNo: page, pageSize: limit}).then((res) => {
+const loadData = (req: QuestionSearchReq) => {
+  getQuestions(req).then((res) => {
     const {list, total} = res.data;
     totalRecords.value = total;
     questions.value = list;
@@ -23,7 +31,14 @@ const loadData = (page: number, limit: number) => {
 };
 
 onMounted(() => {
-  loadData(1, rowsPerPage.value);
+  const searchReq: QuestionSearchReq = {
+    title: "",
+    status: "",
+    questionType: "",
+    pageNo: 1,
+    pageSize: rowsPerPage.value
+  };
+  loadData(searchReq);
 });
 
 </script>

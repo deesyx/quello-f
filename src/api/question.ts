@@ -1,7 +1,7 @@
 import request from "@/utils/request";
-import {PageParam} from "@/type/page.ts";
+import {QuestionSearchReq} from "@/type/question.ts";
 
-export const getQuestions = (req: PageParam) => {
+export const getQuestions = (req: QuestionSearchReq) => {
     return request<any>({
         url: `/questions/search`,
         method: "post",
