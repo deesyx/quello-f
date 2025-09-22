@@ -10,19 +10,32 @@ const currentPage = ref<number>(0);
 const rowsPerPage = ref<number>(10);
 const totalRecords = ref<number>(0);
 
+const searchTitle = ref<string | null>(null);
+const searchStatus = ref<string | null>(null);
+const searchQType = ref<string | null>(null);
+
+const statusOpts = ['PENDING', 'PROCESSING', 'REVIEWING', 'RESOLVED', 'IN_INSPECTION', 'CLOSED', 'COMPLETED']
+const typeOpts = ['FUNCTION', 'INTERACTION', 'PERFORMANCE', 'VISUAL', 'DATA', 'LOGIC', 'SAFE', 'OTHER']
+
 const onPage = (event: DataTablePageEvent): void => {
   currentPage.value = event.page;
-  const searchReq: QuestionSearchReq = {
-    title: "",
-    status: "",
-    questionType: "",
-    pageNo: event.page + 1,
-    pageSize: event.rows
-  };
-  loadData(searchReq);
+  loadData();
 };
 
-const loadData = (req: QuestionSearchReq) => {
+const onSearch = () => {
+  currentPage.value = 0;
+  loadData();
+};
+
+const loadData = () => {
+  const req: QuestionSearchReq = {
+    title: searchTitle.value?.trim() || undefined,
+    status: searchStatus.value?.trim() || undefined,
+    questionType: searchQType.value?.trim() || undefined,
+    pageNo: currentPage.value + 1,
+    pageSize: rowsPerPage.value
+  };
+
   getQuestions(req).then((res) => {
     const {list, total} = res.data;
     totalRecords.value = total;
@@ -31,14 +44,7 @@ const loadData = (req: QuestionSearchReq) => {
 };
 
 onMounted(() => {
-  const searchReq: QuestionSearchReq = {
-    title: "",
-    status: "",
-    questionType: "",
-    pageNo: 1,
-    pageSize: rowsPerPage.value
-  };
-  loadData(searchReq);
+  loadData();
 });
 
 </script>
@@ -49,12 +55,15 @@ onMounted(() => {
       <h3>问题总览列表</h3>
       <div class="table-controls">
 
-        <!-- <IconField>
-                <InputIcon>
-                    <i class="pi pi-search" />
-                </InputIcon>
-                <InputText v-model="searchText" placeholder="Keyword Search" />
-            </IconField> -->
+        <IconField>
+          <InputIcon><i class="pi pi-search"/></InputIcon>
+          <InputText v-model="searchTitle" placeholder="标题"/>
+        </IconField>
+
+        <Dropdown v-model="searchStatus" :options="statusOpts" placeholder="状态" showClear/>
+        <Dropdown v-model="searchQType" :options="typeOpts" placeholder="问题类型" showClear/>
+
+        <Button label="搜索" icon="pi pi-search" @click="onSearch"/>
       </div>
     </div>
 
