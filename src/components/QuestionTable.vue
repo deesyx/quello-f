@@ -26,6 +26,14 @@ const onSearch = () => {
   loadData();
 };
 
+const onClear = () => {
+  searchTitle.value = null;
+  searchStatus.value = null;
+  searchQType.value = null;
+  currentPage.value = 0;
+  loadData();
+};
+
 const loadData = () => {
   const req: QuestionSearchReq = {
     title: searchTitle.value?.trim() || undefined,
@@ -55,14 +63,14 @@ onMounted(() => {
       <div class="table-controls">
 
         <IconField>
-          <InputIcon><i class="pi pi-search"/></InputIcon>
           <InputText v-model="searchTitle" placeholder="标题"/>
         </IconField>
 
         <Select v-model="searchStatus" :options="statusOpts" placeholder="状态" showClear/>
         <Select v-model="searchQType" :options="typeOpts" placeholder="问题类型" showClear/>
 
-        <Button label="搜索" icon="pi pi-search" @click="onSearch"/>
+        <Button label="搜索" @click="onSearch"/>
+        <Button label="清除" @click="onClear"/>
       </div>
     </div>
 
@@ -96,5 +104,34 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.table-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
 
+:deep(.p-inputtext)
+:deep(.p-button) {
+  height: 36px;
+  border-radius: 6px;
+  margin-left: auto;
+}
+
+:deep(.p-select) {
+  min-width: 140px; // 最小宽度
+  height: 36px; // 统一高度
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s, border-color 0.2s;
+
+  &:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  }
+
+  &:focus,
+  &.p-focus {
+    border-color: #3b82f6; // PrimeVue blue-500
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+}
 </style>
