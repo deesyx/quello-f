@@ -5,3 +5,15 @@ export interface QuestionSearchReq extends PageParam {
     status?: string;
     questionType?: string;
 }
+
+export interface QuestionCreateReq {
+    title: string;
+    content: string;
+    productModule: string;
+    questionType: string;
+    severity: string;
+    priority: string;
+    plannedResolutionDate: string;
+    reportedBy: string;
+    responsiblePerson: string;
+}
