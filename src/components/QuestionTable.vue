@@ -4,6 +4,13 @@ import {getQuestions} from "@/api/question";
 import {DataTablePageEvent} from "primevue/datatable";
 import {QuestionSearchReq} from "@/type/question.ts";
 
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import IconField from 'primevue/iconfield';
+import InputText from 'primevue/inputtext';
+import Select from 'primevue/select';
+import Button from 'primevue/button';
+
 const questions = ref<Array<any>>([]);
 const currentPage = ref<number>(0);
 const rowsPerPage = ref<number>(10);
