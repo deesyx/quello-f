@@ -35,6 +35,20 @@ const form = reactive<QuestionCreateReq & { plannedResolutionDate?: Date | null 
 const toast = useToast()
 const emit = defineEmits<{ (e: 'added'): void }>()
 
+function resetForm() {
+  Object.assign(form, {
+    title: '',
+    content: '',
+    productModule: '',
+    questionType: '',
+    severity: '',
+    priority: '',
+    plannedResolutionDate: null,   // Date | null
+    reportedBy: '',
+    responsiblePerson: ''
+  })
+}
+
 async function submit() {
   // 简单校验
   for (const k in form) {
@@ -54,6 +68,7 @@ async function submit() {
   await createQuestions(req)
   toast.add({severity: 'success', summary: '创建成功', life: 2000})
   show.value = false
+  resetForm()
   emit('added')
 }
 </script>
