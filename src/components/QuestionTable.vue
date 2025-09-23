@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {getQuestions} from "@/api/question";
-import DataTable, {DataTablePageEvent} from "primevue/datatable";
-import Column from "primevue/column";
+import {DataTablePageEvent} from "primevue/datatable";
 import {QuestionSearchReq} from "@/type/question.ts";
 
 const questions = ref<Array<any>>([]);
@@ -60,8 +59,8 @@ onMounted(() => {
           <InputText v-model="searchTitle" placeholder="标题"/>
         </IconField>
 
-        <Dropdown v-model="searchStatus" :options="statusOpts" placeholder="状态" showClear/>
-        <Dropdown v-model="searchQType" :options="typeOpts" placeholder="问题类型" showClear/>
+        <Select v-model="searchStatus" :options="statusOpts" placeholder="状态" showClear/>
+        <Select v-model="searchQType" :options="typeOpts" placeholder="问题类型" showClear/>
 
         <Button label="搜索" icon="pi pi-search" @click="onSearch"/>
       </div>
