@@ -13,7 +13,13 @@
       </div>
     </div>
 
-    <DataTable class="custom-datatable" :value="questions"  scrollable scrollHeight="400px" scrollDirection="both" tableStyle="min-width:50rem;"  style="width: 100%" >
+    <DataTable 
+      class="custom-datatable" 
+      :value="questions"  
+      scrollable scrollHeight="400px" scrollDirection="both" 
+      tableStyle="min-width:50rem;"   
+      paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]"
+    >
         <Column v-for="column of columns" :key="column.dataIndex" :field="column.dataIndex" :header="column.title"></Column>
     </DataTable>
 
@@ -29,7 +35,7 @@ import Column from 'primevue/column';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { questions } = storeToRefs(dataStore);
+const { questions, totalquestions } = storeToRefs(dataStore);
 
 // 表格列定义
 const columns = ref([

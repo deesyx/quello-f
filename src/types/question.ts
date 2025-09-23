@@ -71,7 +71,7 @@ export interface Question {
   solution?: string;
   source?: string;
   tag?: string;
-  createdAt?: Date;
+  createdAt?: Date | string;
   updatedAt?: Date;
   '验收情况'?: string;
 }

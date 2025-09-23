@@ -1,7 +1,7 @@
 import http from "@/utils/request";
 import type {PageParam, QuestionDetail} from "@/types/page";
 
-export const getQuestions = (req: PageParam) => {
+export const getQuestions = async (req: PageParam) => {
     return http<any>({
         url: `/questions/search`,
         method: "post",

@@ -199,7 +199,7 @@
       <columnChart_Prod/>
       <columnChart_source/>
       <!-- <columnChart_report/> -->
-      <RankingreportedBy/>
+      <RankingReporter/>
     </div>
 
 
@@ -207,7 +207,7 @@
 
     <div class="charts-container">
       <!-- <ringChart/>
-      <RankingreportedBy/>
+      <RankingReporter/>
       <Ranking/> -->
 
       <div class="rate-container">
@@ -291,7 +291,7 @@
 </template>
 
 <script setup lang="js" name="issues">
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import Select from 'primevue/select';
 import SelectButton from 'primevue/selectbutton';
 import DatePicker from 'primevue/datepicker';
@@ -305,9 +305,20 @@ import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
 const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, totalquestions, newIssue, solvedIssue, overdueIssue, overdue, newlyAdded, overdueWarn, adopt, top10 } = storeToRefs(dataStore);
 
-onMounted(() => {
-  dataStore.getPageData();
+const loading = ref(true);
+onBeforeMount(async () => {
+  console.log('加载前，获取后台数据');
+  try {
+    await dataStore.getPageData();
+  } catch (error) {
+    console.error('Error loading data:', error);
+  } finally {
+    loading.value = false;
+  }
 });
+// onMounted(() => {
+//   dataStore.getPageData();
+// });
 // 处理产品选择变化
 const onProductChange = (value) => {
   console.log('Selected product:', value);

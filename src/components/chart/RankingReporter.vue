@@ -14,7 +14,7 @@ import { renderHorizontalBarChart } from '@/stores/graph';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { issuesByGroup } = storeToRefs(dataStore);
+const { questionsByGroup } = storeToRefs(dataStore);
 
 import { useToolStore } from '@/stores/util';
 const toolStore = useToolStore();
@@ -24,7 +24,7 @@ let chart;
 const container = ref(null);
 
 onMounted(() => {
-    chart = renderHorizontalBarChart(container.value, issuesByGroup.value, "提出问题排行（按组）", isLight.value);
+    chart = renderHorizontalBarChart(container.value, questionsByGroup.value, "提出问题排行（按组）", isLight.value);
 });
 
 onUnmounted(() => {

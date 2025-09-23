@@ -1,19 +1,21 @@
 :root {
   --bg-color: #ffffff;
-  --page-bg-color: #0F172A;
+  --page-bg-color: #F7F8FA;
   --text-color: #333333;
   --text-color-secondary: #555555;
   --primary-color: #007bff;
-  --nav-bg: #f8f9fa;
+  --nav-bg: #ffffff;
+  --nav-link-color: #163027;
+  --nav-link-hover: #ffffff;
   --chart-grid: #e9ecef;
-  --link-color: #2563EB;
+  --link-color: #10B981;
   --link-color-hover:#1a52cb;
 
   --dt-header-bg: #f8f9fa;
   --dt-header-text: #333;
   --dt-row-bg: #ffffff;
   --dt-row-alt-bg: #f2f2f2;
-  --dt-border: #dee2e6;
+  --dt-border: #E5E7EB;
   --dt-text: #495057;
 
 
@@ -21,20 +23,22 @@
 /* 浅色模式 */
 [data-theme="light"] {
   --bg-color: #ffffff;
-  --page-bg-color: #F8FAFC;
+  --page-bg-color: #F7F8FA;
   --text-color: #333333;
   --text-color-secondary: #555555;
   --primary-color: #2563EB;
-  --nav-bg: #f8f9fa;
+  --nav-bg: #ffffff;
+  --nav-link-color: #163027;
+  --nav-link-hover: #ffffff;
   --chart-grid: #e9ecef;
-  --link-color: #2563EB;
+  --link-color: #10B981;
   --link-color-hover:#1a52cb;
 
   --dt-header-bg: #f8f9fa;
   --dt-header-text: #333;
   --dt-row-bg: #ffffff;
   --dt-row-alt-bg: #f2f2f2;
-  --dt-border: #dee2e6;
+  --dt-border: #E5E7EB;
   --dt-text: #495057;
 
 
@@ -48,8 +52,10 @@
   --text-color-secondary: #929292;
   --primary-color: #5e8dff;
   --nav-bg: #1a1a1a;
+  --nav-link-color: #ffffff;
+  --nav-link-hover: #ffffff;
   --chart-grid: #2d2d2d;
-  --link-color: #2563EB;
+  --link-color: #10B981;
   --link-color-hover:#3270f7;
 
   --dt-header-bg: #2c3e50;
