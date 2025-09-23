@@ -1,8 +1,10 @@
 import './assets/main.css'
+import '@/assets/dialog-theme.css'
 
 import {createApp} from 'vue'
 import ElementPlus from "element-plus";
 import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice'
 import '@/styles/prime-paginator.scss'
 import App from '@/App.vue';
 
@@ -17,4 +19,5 @@ app.use(PrimeVue, {
         }
     }
 });
+app.use(ToastService)
 app.mount("#app");

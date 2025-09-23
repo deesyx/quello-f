@@ -13,7 +13,7 @@ export interface QuestionCreateReq {
     questionType: string;
     severity: string;
     priority: string;
-    plannedResolutionDate: string;
+    plannedResolutionDate?: string | null;
     reportedBy: string;
     responsiblePerson: string;
 }

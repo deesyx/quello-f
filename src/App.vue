@@ -1,8 +1,13 @@
 <script setup>
 import QuestionTable from '@/components/QuestionTable.vue'
+import Toast from 'primevue/toast'
 </script>
 
 <template>
+  <div>
+    <Toast position="top-right" />   <!-- ③ 提供实例 -->
+    <router-view />
+  </div>
   <div class="wrapper">
     <QuestionTable/>
   </div>

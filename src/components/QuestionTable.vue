@@ -10,6 +10,7 @@ import IconField from 'primevue/iconfield';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
 import Button from 'primevue/button';
+import AddQuestionModal from "@/components/AddQuestionModal.vue";
 
 const questions = ref<Array<any>>([]);
 const currentPage = ref<number>(0);
@@ -78,6 +79,7 @@ onMounted(() => {
 
         <Button label="搜索" @click="onSearch"/>
         <Button label="清除" @click="onClear"/>
+        <AddQuestionModal @added="loadData"/>
       </div>
     </div>
 

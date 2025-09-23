@@ -1,0 +1,10 @@
+/* 遮罩层 */
+.p-dialog-mask {
+    background: rgba(11, 11, 30, 0.45) !important;
+}
+
+/* 内容区 */
+.p-dialog-content {
+    background: #fafafa !important;
+    border-radius: 12px !important;
+}
