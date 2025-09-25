@@ -5,7 +5,7 @@
       <div class="sidebar-header">
         <div class="brand-area" v-if="!isSidebarCollapsed">
           <img class="logo" src="@/assets/images/Logo.svg" alt="Logo">
-          <span>GUX数据看板</span>
+          <span>GUX数据展示</span>
         </div>
         <button class="toggle-btn" @click="toggleSidebar">
           <!-- <svg v-if="isSidebarCollapsed" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@
                 <img src="@/assets/images/moon.svg" alt="user-img">
               </div>
               <div class="user-img-box" v-else>
-                <img src="@/assets/images/lightmode2.svg" alt="user-img">
+                <img src="@/assets/images/sun.svg" alt="user-img">
               </div>
             </a>
           </div>

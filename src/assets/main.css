@@ -1,8 +1,8 @@
 :root {
   --bg-color: #ffffff;
   --page-bg-color: #F7F8FA;
-  --text-color: #333333;
-  --text-color-secondary: #555555;
+  --text-color: #1F2937;
+  --text-color-secondary: #6B7280;
   --primary-color: #007bff;
   --nav-bg: #ffffff;
   --nav-link-color: #163027;
@@ -24,8 +24,8 @@
 [data-theme="light"] {
   --bg-color: #ffffff;
   --page-bg-color: #F7F8FA;
-  --text-color: #333333;
-  --text-color-secondary: #555555;
+  --text-color: #1F2937;
+  --text-color-secondary: #6B7280;
   --primary-color: #2563EB;
   --nav-bg: #ffffff;
   --nav-link-color: #163027;
@@ -46,12 +46,12 @@
 
 /* 暗黑模式 */
 [data-theme="dark"] {
-  --bg-color: #1E293B;
-  --page-bg-color: #0F172A;
-  --text-color: #f0f0f0;
-  --text-color-secondary: #929292;
+  --bg-color: #232424;
+  --page-bg-color: #191A1A;
+  --text-color: #ffffff;
+  --text-color-secondary: #9FACAA;
   --primary-color: #5e8dff;
-  --nav-bg: #1a1a1a;
+  --nav-bg: #232424;
   --nav-link-color: #ffffff;
   --nav-link-hover: #ffffff;
   --chart-grid: #2d2d2d;

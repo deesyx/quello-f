@@ -21,3 +21,10 @@ export interface QuestionDetail {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+export interface dashboardSearchReq {
+    productModule?: string;
+    startDate?: string;
+    endDate?: string;
+    period: string;
+}

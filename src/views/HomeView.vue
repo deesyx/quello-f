@@ -3,6 +3,7 @@
     <div class="scroll-view">
       <!-- <h1>问题库数据看板</h1> -->
       <!--筛选区-->
+      <button @click="test">接口测试</button>
       <div class="filter-container">
         <div class="filter-item">
           <label for="productLine">产品模块</label>
@@ -15,11 +16,22 @@
         </div>
         <div class="filter-item">
           <label for="dateRange">日期范围</label>
-          <DatePicker id="dateRange" v-model="dateRange" selectionMode="range" :manualInput="false" />
+          <DatePicker 
+            id="dateRange" 
+            v-model="dateRange"
+            selectionMode="range" 
+            :manualInput="false" 
+            dateFormat="yy/mm/dd" 
+            placeholder="请选择日期范围" 
+            :showButtonBar="true" 
+            :minDate="new Date('2023-01-01')" 
+            />
+            <!-- :change="onDateChange()" -->
+
         </div>
         <div class="filter-item">
           <label for="period">周期</label>
-          <SelectButton id="period" v-model="selectedPeriod" :options="periods" @change="onPeriodChange"/>
+          <SelectButton id="period" v-model="selectedPeriod" :options="periods" @change="onPeriodChange" :allowEmpty="false" />
         </div>
       </div>
       
@@ -27,76 +39,17 @@
       <h3>整体情况</h3>
 
       <div class="stats-container">
-        <div class="stat-item">
+        <div v-for="item, id in labelList" :key="id" class="stat-item">
           <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 12H15M12 9V15M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img :src="getImageUrl(item)" alt="">
           </div>
-          <div class="stat-label">问题总数</div>
-          <div class="stat-value">{{ totalquestions }}</div>
-          <div class="stat-change positive">
-            <span class="change-icon">↑</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">新增问题</div>
-          <div class="stat-value">{{ newIssue }}</div>
-          <div class="stat-change positive">
-            <span class="change-icon">↑</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 7V17M7 12H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">采纳率</div>
-          <div class="stat-value">{{ adopt }}<span style="font-size: 0.6em;"> %</span></div>
-          <div class="stat-change negative">
-            <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 12L11 14L15 10M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">已解决</div>
-          <div class="stat-value">{{ solvedIssue }}</div>
-          <div class="stat-change negative">
-            <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 8V12L15 15M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">超时率</div>
-          <div class="stat-value">{{ overdueIssue }}<span style="font-size: 0.6em;"> %</span></div>
-          <div class="stat-change negative">
-            <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 12L11 14L15 10M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">按期解决率</div>
-          <div class="stat-value">{{ solvedIssue }}<span style="font-size: 0.6em;"> %</span></div>
-          <div class="stat-change negative">
-            <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
+          <div class="stat-label">{{ labelMap[item] }}</div>
+          <div class="stat-value" v-if="item.includes('Rate')">{{ overview && overview[item] !== undefined ? overview[item] * 100 : 0  }} <span style="font-size:14px;">%</span></div>
+          <div class="stat-value" v-else >{{ overview && overview[item] !== undefined ? overview[item] : 0  }}</div>
+          <div class="stat-change" :class="overview[item+'Gr'] > 0 ? 'positive' : 'negative'">
+            <span class="change-icon">{{ overview && overview[item+'Gr'] !== undefined ? (overview[item+'Gr'] > 0 ? '↑' : '↓' ) : ''}}</span>
+            {{ overview && overview[item+'Gr'] !== undefined ? ( Math.abs(overview[item+'Gr'] * 100).toFixed(1) ) : '--' }}%
+            <span style="color:var(--text-color-secondary); font-weight: normal;">较上{{ selectedPeriod }}</span>
           </div>
         </div>
       </div>
@@ -303,19 +256,27 @@ const { mode } = storeToRefs(toolStore);
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, totalquestions, newIssue, solvedIssue, overdueIssue, overdue, newlyAdded, overdueWarn, adopt, top10 } = storeToRefs(dataStore);
+const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, overview, overdue, newlyAdded, overdueWarn, } = storeToRefs(dataStore);
+
+
 
 const loading = ref(true);
 onBeforeMount(async () => {
   console.log('加载前，获取后台数据');
   try {
     await dataStore.getPageData();
+    await dataStore.getDashbaordData();
   } catch (error) {
     console.error('Error loading data:', error);
   } finally {
     loading.value = false;
   }
 });
+
+async function test() {
+  await dataStore.getDashbaordData();
+
+}
 // onMounted(() => {
 //   dataStore.getPageData();
 // });
@@ -326,10 +287,29 @@ const onProductChange = (value) => {
   // 例如：filterIssuesByProduct(value)
 };
 
-const onPeriodChange = (value) => {
+import { watch } from 'vue';
+
+// Watch for dateRange changes
+watch(dateRange, (newDateRange, oldDateRange) => {
+  // console.log('Date range changed from:', oldDateRange, 'to:', newDateRange);
+  // console.log('当前日期范围：', dateRange.value[0], dateRange.value[1]);
+  
+  // Perform your operations here
+  if (newDateRange && newDateRange.length === 2) {
+    // Refresh data when date range changes
+    dataStore.getDashbaordData();
+  }
+});
+
+// const onDateChange = async (value) => { 
+//   console.log('改变日期范围。');
+//   overview.value = await dataStore.getDashbaordData();
+// };
+
+const onPeriodChange = async (value) => {
   console.log('Selected period:', value);
   // 在这里添加你的筛选逻辑
-  // 例如：filterIssuesByPeriod(value)
+  overview.value = await dataStore.getDashbaordData();
 };
 
 import IssueTable from '../components/chart/IssueTable.vue';
@@ -345,6 +325,30 @@ import Top10  from '@/components/chart/Top10.vue';
 import Ranking  from '@/components/chart/Ranking.vue';
 import RankingReporter from '@/components/chart/RankingReporter.vue';
 import columnChart_report  from '@/components/chart/columnChart_report.vue';
+import { date } from '@primeuix/themes/aura/datepicker';
+
+
+// 维护icon路径
+const labelList = [
+  'totalQuestions',
+  'newQuestions',
+  'adoptionRate',
+  'resolvedQuestions',
+  'onScheduleResolutionRate',
+  'overtimeRate',
+];
+// Create a helper function to resolve image paths
+const getImageUrl = (name) => {
+  return new URL(`../assets/images/${name}.svg`, import.meta.url).href;
+};
+const labelMap = {
+  totalQuestions: '总问题数',
+  newQuestions: '新增问题数',
+  adoptionRate: '采纳率',
+  resolvedQuestions: '解决问题数',
+  onScheduleResolutionRate: '按时解决率',
+  overtimeRate: '超时率',
+};
 </script>
 
 <style lang="scss" scoped>
@@ -391,8 +395,9 @@ main {
   align-items: center;
   
   label {
-    font-weight: 500;
-    color: var(--text-color);
+    font-size: 14px;
+    color: var(--text-color-secondary);
+    font-weight: normal;
   }
   
   // 确保控件宽度适配内容
@@ -436,6 +441,7 @@ main {
   .stat-label {
     font-size: 14px;
     color: var(--text-color-secondary);
+    font-weight: normal;
   }
   
   .stat-value {

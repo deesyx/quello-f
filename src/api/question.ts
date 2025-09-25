@@ -1,5 +1,5 @@
 import http from "@/utils/request";
-import type {PageParam, QuestionDetail} from "@/types/page";
+import type {PageParam, QuestionDetail, dashboardSearchReq} from "@/types/page";
 
 export const getQuestions = async (req: PageParam) => {
     return http<any>({
@@ -12,6 +12,14 @@ export const getQuestions = async (req: PageParam) => {
 export const createQuestion = (req: QuestionDetail) => {
     return http<any>({
         url: `/questions/creation`,
+        method: "post",
+        data: req
+    });
+};
+
+export const dashboardSearch = (req: dashboardSearchReq) => {
+    return http<any>({
+        url: `/dashboard/detail`,
         method: "post",
         data: req
     });
