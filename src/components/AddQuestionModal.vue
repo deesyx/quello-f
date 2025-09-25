@@ -113,7 +113,6 @@ async function submit() {
             v-model="form.questionType"
             :options="typeOpts"
             placeholder="问题类型"
-            class="w-full"
         />
         <label for="questionType">问题类型 *</label>
       </FloatLabel>
@@ -125,7 +124,6 @@ async function submit() {
             v-model="form.severity"
             :options="severityOpts"
             placeholder="严重等级"
-            class="w-full"
         />
         <label for="severity">严重等级 *</label>
       </FloatLabel>
@@ -137,7 +135,6 @@ async function submit() {
             v-model="form.priority"
             :options="priorityOpts"
             placeholder="优先级"
-            class="w-full"
         />
         <label for="priority">优先级 *</label>
       </FloatLabel>
@@ -149,7 +146,6 @@ async function submit() {
             v-model="form.plannedResolutionDate"
             dateFormat="yy-mm-dd"
             showIcon
-            class="w-full"
         />
         <label for="plannedResolutionDate">计划解决时间 *</label>
       </FloatLabel>
@@ -176,12 +172,8 @@ async function submit() {
   </Dialog>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .field {
   margin-bottom: 1.2rem;
-}
-
-.w-full {
-  width: 100%;
 }
 </style>
