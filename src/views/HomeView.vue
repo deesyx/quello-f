@@ -36,33 +36,44 @@
       </div>
       
       <!-- 数据统计区 -->
-      <h3>整体情况</h3>
+      <section>
+        <h3>整体情况</h3>
 
-      <div class="stats-container">
-        <div v-for="item, id in labelList" :key="id" class="stat-item">
-          <div class="stat-icon">
-            <img :src="getImageUrl(item)" alt="">
-          </div>
-          <div class="stat-label">{{ labelMap[item] }}</div>
-          <div class="stat-value" v-if="item.includes('Rate')">{{ overview && overview[item] !== undefined ? overview[item] * 100 : 0  }} <span style="font-size:14px;">%</span></div>
-          <div class="stat-value" v-else >{{ overview && overview[item] !== undefined ? overview[item] : 0  }}</div>
-          <div class="stat-change" :class="overview[item+'Gr'] > 0 ? 'positive' : 'negative'">
-            <span class="change-icon">{{ overview && overview[item+'Gr'] !== undefined ? (overview[item+'Gr'] > 0 ? '↑' : '↓' ) : ''}}</span>
-            {{ overview && overview[item+'Gr'] !== undefined ? ( Math.abs(overview[item+'Gr'] * 100).toFixed(1) ) : '--' }}%
-            <span style="color:var(--text-color-secondary); font-weight: normal;">较上{{ selectedPeriod }}</span>
+        <div class="stats-container">
+          <div v-for="item, id in labelList" :key="id" class="stat-item">
+            <div class="stat-icon">
+              <img :src="getImageUrl(item)" alt="">
+            </div>
+            <div class="stat-label">{{ labelMap[item] }}</div>
+            <div class="stat-value" v-if="item.includes('Rate')">
+              {{ overview && overview[item] !== undefined ? overview[item] * 100 : 0  }}
+              <span style="font-size:14px;">%</span>
+            </div>
+            <div class="stat-value" v-else >
+              {{ overview && overview[item] !== undefined ? overview[item] : 0  }}
+            </div>
+            <div class="stat-change" :class="overview[item+'Gr'] > 0 ? 'positive' : 'negative'">
+              <span class="change-icon">
+                {{ overview && overview[item+'Gr'] !== undefined ? (overview[item+'Gr'] > 0 ? '↑' : '↓' ) : ''}}
+              </span>
+              {{ overview && overview[item+'Gr'] !== undefined ? ( Math.abs(overview[item+'Gr'] * 100).toFixed(1) ) : '--' }}%
+              <span style="color:var(--text-color-secondary); font-weight: normal;">
+                较上{{ selectedPeriod }}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-    <div class="charts-container">
-      <!-- 说明 -->
-      <!--
-        -- 在不同组件里写的原因是，那个chart变量，
-        -- 每个图表需要有一个chart变量，写在一起不方便
-      -->
-      <lineChart2/>
-      <!-- <enterOverview/> -->
-    </div>
+        <div class="charts-container">
+          <!-- 说明 -->
+          <!--
+            -- 在不同组件里写的原因是，那个chart变量，
+            -- 每个图表需要有一个chart变量，写在一起不方便
+          -->
+          <lineChart2/>
+          <!-- <enterOverview/> -->
+        </div>
+      </section>
 
     <h3>问题入库情况</h3>
     <!-- <div class="stats-container">
@@ -262,6 +273,8 @@ const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, 
 
 const loading = ref(true);
 onBeforeMount(async () => {
+  console.log('父组件加载。。。');
+
   console.log('加载前，获取后台数据');
   try {
     await dataStore.getPageData();
@@ -274,7 +287,8 @@ onBeforeMount(async () => {
 });
 
 async function test() {
-  await dataStore.getDashbaordData();
+  // await dataStore.getDashbaordData();
+  await dataStore.getQuestionTrendsData();
 
 }
 // onMounted(() => {
@@ -290,14 +304,15 @@ const onProductChange = (value) => {
 import { watch } from 'vue';
 
 // Watch for dateRange changes
-watch(dateRange, (newDateRange, oldDateRange) => {
+watch(dateRange, async (newDateRange, oldDateRange) => {
   // console.log('Date range changed from:', oldDateRange, 'to:', newDateRange);
   // console.log('当前日期范围：', dateRange.value[0], dateRange.value[1]);
   
   // Perform your operations here
   if (newDateRange && newDateRange.length === 2) {
     // Refresh data when date range changes
-    dataStore.getDashbaordData();
+    await dataStore.getDashbaordData();
+    // dataStore.getQuestionTrendsData();
   }
 });
 
@@ -310,6 +325,7 @@ const onPeriodChange = async (value) => {
   console.log('Selected period:', value);
   // 在这里添加你的筛选逻辑
   overview.value = await dataStore.getDashbaordData();
+
 };
 
 import IssueTable from '../components/chart/IssueTable.vue';
@@ -352,6 +368,7 @@ const labelMap = {
 </script>
 
 <style lang="scss" scoped>
+
 main {
   height: calc(100vh - 60px);
   // padding: 60px 20px;
@@ -366,10 +383,16 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 32px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 20px;
+
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
   }
 }
 
@@ -432,7 +455,7 @@ main {
   flex-direction: column;
   gap: 8px;
   padding: 20px;
-  min-width: 180px;
+  min-width: 200px;
   background: var(--bg-color);
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -445,6 +468,7 @@ main {
   }
   
   .stat-value {
+    font-family: 'D-DIN-PRO';
     font-size: 24px;
     font-weight: bold;
     color: var(--text-color);
@@ -455,6 +479,7 @@ main {
     display: flex;
     align-items: center;
     gap: 4px;
+    margin-top: 8px;
     
     .change-icon {
       font-size: 10px;
@@ -465,19 +490,19 @@ main {
     position: absolute;
     top: 15px;
     right: 15px;
-    width: 30px;
-    height: 30px;
-    background-color: rgba(80, 70, 228, 0.1);
-    border-radius: 6px;
+    // width: 48px;
+    // height: 48px;
+    width: 20%;
+    padding: 10px 12px;
+    background-color: var(--icon-bg-color);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .stat-icon svg {
-    width: 18px;
-    height: 18px;
-    color: #5046E4;
+    img {
+      width: 18px;
+      width: 100%;
+    }
   }
 }
 
@@ -487,11 +512,11 @@ main {
 }
 
 .positive {
-  color: #52c41a;
+  color: #23C799;
 }
 
 .negative {
-  color: #ff4d4f;
+  color: #FF4040;
 }
 
 

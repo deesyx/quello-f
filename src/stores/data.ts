@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 // import { getQuestionDetail, searchQuestions  } from '@/api/question';
 // import type { Question, QuestionDetail, QuestionSearchReq } from '@/types/question';
-import { getQuestions, createQuestion, dashboardSearch } from "@/api/question";
+import { getQuestions, createQuestion, dashboardSearch, getQuestionTrends } from "@/api/question";
 
 const periodMap = {
   '年': 'YEAR',
@@ -12,6 +12,16 @@ const periodMap = {
   '周': 'WEEK'
 }
 type PeriodKey = '年' | '季度' | '月' | '周';
+
+const statusMap = {
+  'REVIEWING': '待评审',
+  'PENDING': '待处理',
+  'PROCESSING': '处理中',
+  'RESOLVED': '验收中',
+  'IN_INSPECTION': '验收中',
+  'COMPLETED': '已完成',
+  'CLOSED': '已关闭',
+}
 
 export const useDataStore = defineStore('data', {
     state: () => ({
@@ -22,6 +32,8 @@ export const useDataStore = defineStore('data', {
         dateRange: null, // 日期范围
         periods: ['年', '季度', '月', '周'], // 周期
         selectedPeriod: '年' as PeriodKey,
+        trendPeriods: ['月', '周'], // 周期
+        selectedTrendPeriod: '月' as PeriodKey,
         // 日期范围
         startDate: null,
         endDate: null,
@@ -32,15 +44,32 @@ export const useDataStore = defineStore('data', {
         result: [], // 筛选结果
 
         // 数据总览
-        overview: {
-          totalQuestions: 0, totalQuestionsGr: 0,
-          adoptionRate: 0, adoptionRateGr: 0,
-          newQuestions: 0, newQuestionsGr: 0,
-          onScheduleResolutionRate: 0, onScheduleResolutionRateGr: 0,
-          overtimeRate: 0, overtimeRateGr: 0,
-          resolvedQuestions: 0, resolvedQuestionsGr: 0,
-        },
+        // overview: {
+        //   totalQuestions: 0, totalQuestionsGr: 0,
+        //   adoptionRate: 0, adoptionRateGr: 0,
+        //   newQuestions: 0, newQuestionsGr: 0,
+        //   onScheduleResolutionRate: 0, onScheduleResolutionRateGr: 0,
+        //   overtimeRate: 0, overtimeRateGr: 0,
+        //   resolvedQuestions: 0, resolvedQuestionsGr: 0,
+        // },
 
+        status: [], // 状态分布
+
+        questionTrendData:[], // 问题趋势数据
+
+
+        // 写在一起
+        data: {
+          overview: {
+            totalQuestions: 0, totalQuestionsGr: 0,
+            adoptionRate: 0, adoptionRateGr: 0,
+            newQuestions: 0, newQuestionsGr: 0,
+            onScheduleResolutionRate: 0, onScheduleResolutionRateGr: 0,
+            overtimeRate: 0, overtimeRateGr: 0,
+            resolvedQuestions: 0, resolvedQuestionsGr: 0,
+          },
+          status: [], // 状态分布
+        },
 
         // 问题列表
         questions:[
@@ -86,15 +115,25 @@ export const useDataStore = defineStore('data', {
         // },
         
         // 状态分布
-        status: (state) => [
-            { '状态': '待评审', '数量': state.questions.filter(issue => issue.status === '待评审').length },
-            { '状态': '待处理', '数量': state.questions.filter(issue => issue.status === '待处理').length },
-            { '状态': '处理中', '数量': state.questions.filter(issue => issue.status === '处理中').length },
-            { '状态': '已解决', '数量': state.questions.filter(issue => issue.status === '已解决').length },
-            { '状态': '验收中', '数量': state.questions.filter(issue => issue.status === '验收中').length },
-            { '状态': '已完成', '数量': state.questions.filter(issue => issue.status === '已完成').length },
-            { '状态': '已关闭', '数量': state.questions.filter(issue => issue.status === '已关闭').length },
-        ],
+        // status: (state) => [
+        //     { '状态': '待评审', '数量': state.questions.filter(issue => issue.status === '待评审').length },
+        //     { '状态': '待处理', '数量': state.questions.filter(issue => issue.status === '待处理').length },
+        //     { '状态': '处理中', '数量': state.questions.filter(issue => issue.status === '处理中').length },
+        //     { '状态': '已解决', '数量': state.questions.filter(issue => issue.status === '已解决').length },
+        //     { '状态': '验收中', '数量': state.questions.filter(issue => issue.status === '验收中').length },
+        //     { '状态': '已完成', '数量': state.questions.filter(issue => issue.status === '已完成').length },
+        //     { '状态': '已关闭', '数量': state.questions.filter(issue => issue.status === '已关闭').length },
+        // ],
+
+        overview: (state) => {
+          // console.log('调用了getter：', state.data.overview)
+          return state.data.overview;
+        },
+
+        // status: (state) => {
+        //   // console.log('调用了getter：', state.data.status)
+        //   return state.data.status;
+        // },
 
         // 类型分布
         questionType: (state) => [
@@ -320,7 +359,7 @@ export const useDataStore = defineStore('data', {
         try {
           const startDate = (this.dateRange ? new Date(this.dateRange[0]).toISOString() : new Date('2020-01-01').toISOString()).substring(0, 10);
           const endDate = (this.dateRange ? new Date(this.dateRange[1]).toISOString() : new Date().toISOString()).substring(0, 10);
-          console.log('开始日期: ', startDate, '结束日期: ', endDate);
+          // console.log('开始日期: ', startDate, '结束日期: ', endDate);
           if (endDate === '1970-01-01') return this.overview;
       
           const response = await dashboardSearch({
@@ -329,10 +368,54 @@ export const useDataStore = defineStore('data', {
             period: periodMap[this.selectedPeriod]
           });
           
-          console.log('getDashboardData: ', response.data.overview);
-          this.overview = response.data.overview;
+          console.log('getDashboardData: ', response.data);
+
+
+          // this.data = response.data;
+
+
+          this.data.overview = response.data.overview;
+          // this.overview = this.data.overview;
           console.log('总问题数：', this.overview);
-          return response.data.overview;
+
+          this.data.status = response.data.statusDistributions.map((item: any) => ({
+            '状态': statusMap[item.key as keyof typeof statusMap],
+            '数量': item.value
+          }));
+          this.status = this.data.status;
+          console.log('状态分布：', this.status);
+
+          return response.data;
+        } catch (error) {
+          console.error('Error fetching dashboard data:', error);
+          return this.overview; // Return current overview on error
+        }
+      },
+      
+
+      async getQuestionTrendsData() { 
+        try {
+          const startDate = (this.dateRange ? new Date(this.dateRange[0]).toISOString() : new Date('2020-01-01').toISOString()).substring(0, 10);
+          const endDate = (this.dateRange ? new Date(this.dateRange[1]).toISOString() : new Date().toISOString()).substring(0, 10);
+          if (endDate === '1970-01-01') return this.overview;
+
+          const response = await getQuestionTrends({
+            startDate, 
+            endDate,
+            period: periodMap[this.selectedTrendPeriod]
+          });
+
+          this.data = response.data;
+
+
+          
+          // 映射为中文字段名
+          this.questionTrendData = response.data.map((item: any) => ({
+            '日期': item.time,
+            '数量': item.count
+          }));
+          console.log('新增问题趋势：（字段映射后）', this.questionTrendData);
+          return this.questionTrendData;
         } catch (error) {
           console.error('Error fetching dashboard data:', error);
           return this.overview; // Return current overview on error

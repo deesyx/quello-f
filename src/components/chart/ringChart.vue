@@ -14,7 +14,7 @@ import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
 const { status } = storeToRefs(dataStore);
 
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
 import { renderRingChart } from '@/stores/graph';
 
 import { watch } from 'vue';
@@ -26,8 +26,11 @@ const { isLight } = storeToRefs(toolStore);
 let chart;
 const container = ref(null);
 
-onMounted(() => {
-    chart = renderRingChart(container.value, status.value, "状态分布", isLight.value);
+onBeforeMount(async () => {
+  console.log('子组件加载。。。');
+  // await dataStore.getDashbaordData();
+  // console.log('status:', dataStore.status);
+  chart = renderRingChart(container.value, status.value, "状态分布", isLight.value);
 });
 
 onUnmounted(() => {
@@ -47,6 +50,28 @@ watch(isLight, () => {
     chart.render();
   }
 });
+
+// watch(data, () => {
+//   if (chart) {
+//     chart.destroy();
+//     chart = null;
+//     chart = renderRingChart(container.value, data.status, "状态分布", isLight.value);
+//   }
+// });
+
+// Watch for changes in status specifically
+watch(
+  () => status,
+  (newStatus) => {
+    console.log('这是监听status的方法:', newStatus.value);
+    if (chart && newStatus) {
+      chart.destroy();
+      chart = null;
+      chart = renderRingChart(container.value, newStatus.value, "状态分布", isLight.value);
+    }
+  },
+  { immediate: true } // Trigger immediately on mount
+);
 </script>
 
 <style scoped>

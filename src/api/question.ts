@@ -25,6 +25,23 @@ export const dashboardSearch = (req: dashboardSearchReq) => {
     });
 };
 
+/** 
+ * 新增问题趋势
+ * @param {object} params DashboardSearchReq
+ * @param {string} params.productModule 产品模块
+ * @param {object} params.startDate 开始日期
+ * @param {object} params.endDate 结束日期
+ * @param {string} params.period 周期,可用值:YEAR,QUARTER,MONTH,WEEK
+ * @returns
+ */
+export const getQuestionTrends = (req: dashboardSearchReq) => {
+    return http<any>({
+        url: `/dashboard/question-trends`,
+        method: "post",
+        data: req
+    });
+};
+
 // /**
 //  * 获取问题详情
 //  * @param questionId 问题ID (如 Q20250315001)

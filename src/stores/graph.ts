@@ -187,6 +187,7 @@ export function renderBarChart2(container: any, data: any, title: string, theme:
 
 // 折线图
 export function renderLineChart(container: any, data: any, title: string, theme: boolean) {
+
     const keys = Object.keys(data[0]);
     const x = keys[0];
     const y = keys[1];
@@ -197,23 +198,69 @@ export function renderLineChart(container: any, data: any, title: string, theme:
       height: 360,
     });
   
-    // 声明可视化
     chart.options({
       theme: theme ? 'light' : 'dark',
-      type: 'line',
-      title: {
-          title,
-        //   subtitle: '副标题',
-      },
+      type: 'view',
+      // title: {
+      //     title,
+      //   //   subtitle: '副标题',
+      // },
+      autoFit: true,
+      paddingRight: 10,
       data,
-      encode: { x, y, key: x },
-      style: {
-          lineWidth: 3,
-      },
-      animate: {
-        update: { duration: 300 }
-      }
+      // scale: {
+      //   y: {
+      //     nice: true,
+      //     tickMethod: () => [0, 50, 100, 170, 199],
+      //   },
+      // },
+      // axis: {
+      //   x: {
+      //     labelFormatter: (d:string) => d.substring(0, 4)+'年'+d.substring(5, 7)+'月',
+      //   },
+      // },
+      children: [
+        {
+          type: 'area',
+          encode: { x, y, shape: 'smooth' },
+          // axis: { y: { labelFormatter: '~s', title: false } },
+          style: {
+            fill: 'linear-gradient(90deg, rgba(44, 182, 121, 0.2) 0%, rgba(44, 182, 121, 0) 100%)',
+            // fillOpacity: 0.2,
+          },
+          tooltip: false,
+        },
+        {
+          type: 'line',
+          encode: { x, y, shape: 'smooth' },
+    //       interaction: {
+    //         tooltip: {
+    //           render: (event, { title, items }) => `
+    // <div style="display: flex; align-items: center;">
+    //   <span>${title}：</span>
+    //   <h2
+    //     style="
+    //         margin-left: 8px;
+    //         margin-right: 8px;
+    //         margin-top:4px;
+    //         font-size: 18px;
+    //         line-height: 36px;
+    //         font-weight: 500px"
+    //   >
+    //     ${items[0].value}
+    //   </h2>
+    // </div>
+    //           `,
+    //         },
+    //       },
+          style: {
+            lineWidth: 2,
+            stroke: '#2CB679',
+          },
+        },
+      ],
     });
+    
   
     // 渲染可视化
     chart.render();
