@@ -3,6 +3,9 @@
 import { Chart } from '@antv/g2';
 // 渲染环形图
 export function renderRingChart(container: any, data: any, title: string, theme: boolean) {
+    // 自定义颜色数组
+    const colors = ['#00A971', '#66BB6A', '#8BC34A', '#FFD740', '#FFEB3B', '#CDDC39', '#FFC107'];
+    // const colors = ['#00A971', '#4EC49C', '#A7DA73', '#E9C662', '#E9E762', '#D8FF95', '#FFC107'];
     
     const keys = Object.keys(data[0]);
     const x = keys[0];
@@ -30,6 +33,12 @@ export function renderRingChart(container: any, data: any, title: string, theme:
           y,
           color: x
         },
+        // 使用预定义的颜色数组
+        scale: {
+          color: {
+              range: colors
+          }
+        },
         labels: [
           {
             text: y,
@@ -51,6 +60,7 @@ export function renderRingChart(container: any, data: any, title: string, theme:
 
     chart.render();
   
+    console.log('绘制环形图成功。');
     return chart;
   }
 
@@ -78,6 +88,14 @@ export function renderColumnChart(container: any, data: any, title: string, them
     data,
     // xField: 'genre',
     // yField: 'sold',
+    scale: {
+      color: {
+          independent: true // Make color independent of data
+      }
+    },
+    style: {
+        fill: '#00A971' // Set the specific color
+    },
     animate: {
       update: { duration: 300, easing: 'easeQuadInOut' }
     }
@@ -91,6 +109,8 @@ export function renderColumnChart(container: any, data: any, title: string, them
 
 
 export function renderBarChart(container: any, data: any, title: string, theme: boolean) {
+
+    const colors = ['#00A971', '#4EC49C', '#A6DA73', '#E9C662'];
 
     const keys = Object.keys(data[0]);
     const x = keys[0];
@@ -111,6 +131,12 @@ export function renderBarChart(container: any, data: any, title: string, theme: 
         type: 'interval',
         data,
         encode: { x, y, color: x },
+        // 使用预定义的颜色数组
+        scale: {
+          color: {
+              range: colors
+          }
+        },
         style: { minHeight: 50 },
       });
   
@@ -121,7 +147,19 @@ export function renderBarChart(container: any, data: any, title: string, theme: 
 
 // 渲染条形图（x轴垂直向上，y轴水平向右）
 export function renderHorizontalBarChart(container: any, data: any, title: string, theme: boolean) {
-    const keys = Object.keys(data[0]);
+  const colors = [
+    '#FFD700', // 金色
+    '#90EE90', // 淡绿
+    '#98FB98', // 淡绿
+    '#228B22', // 深绿
+    '#4169E1', // 蓝色
+    '#FFA500', // 橙色
+    '#8A2BE2', // 紫色
+    '#87CEEB', // 天蓝
+    '#DDA0DD'  // 淡紫
+
+];
+  const keys = Object.keys(data[0]);
     const x = keys[0];
     const y = keys[1];
 
@@ -141,6 +179,11 @@ export function renderHorizontalBarChart(container: any, data: any, title: strin
         data,
         transform: [{ type: 'sortX', by: 'y', reverse: true }], // 按照y值排序x轴，reverse: false表示从小到大
         encode: { x, y, color: x },
+        scale: {
+          color: {
+              range: colors
+          }
+        },
         style: { minHeight: 50 },
         coordinate: { 
           transform: [{ type: 'transpose' }] // 转置坐标系实现横向效果

@@ -1,6 +1,7 @@
 <template>
     <div class="chart-card">
-      <div ref="container"></div>
+      <div v-if="!isLoading" ref="container"></div>
+      <div v-else>数据加载中...</div>
     </div>
 </template>
 
@@ -17,14 +18,14 @@ import { renderBarChart } from '@/stores/graph';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { severity } = storeToRefs(dataStore);
+const { severity, isLoading } = storeToRefs(dataStore);
 
 let chart;
 const container = ref(null);
 
-onMounted(() => {
-    chart = renderBarChart(container.value, severity.value, "严重等级分布", isLight.value);
-});
+// onMounted(() => {
+//     chart = renderBarChart(container.value, severity.value, "严重等级分布", isLight.value);
+// });
 
 onUnmounted(() => {
     // 添加检查确保图表存在再销毁
@@ -45,6 +46,20 @@ watch(isLight, () => {
 });
 
 
+watch([severity, container], ([newSeverity, newContainer]) => {
+    // console.log('Watcher triggered:', { newSeverity, newContainer });
+    
+    if (newContainer && newSeverity && typeof newSeverity === 'object' && Object.keys(newSeverity).length > 0) {
+        try {
+            if (chart) {
+                chart.destroy();
+            }
+            chart = renderBarChart(newContainer, newSeverity, "严重等级分布", isLight.value);
+        } catch (error) {
+            console.error('图表渲染错误:', error);
+        }
+    }
+}, { flush: 'post' }); // Post ensures DOM is updated
 
 
 </script>

@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 // import Antd from 'ant-design-vue';
 // import 'ant-design-vue/dist/reset.css';
@@ -14,6 +15,9 @@ import Aura from '@primeuix/themes/aura';
 import Button from 'primevue/button'; // 引入组件
 
 const app = createApp(App)
+
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
 app.use(createPinia())
 app.use(router)
@@ -68,5 +72,6 @@ app.use(PrimeVue, {
          // ... 可以根据需要添加更多组件的翻译文本
     }
 });
+
 app.component('Button', Button); // 全局注册组件
 app.mount('#app')

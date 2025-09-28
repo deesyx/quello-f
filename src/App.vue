@@ -102,6 +102,7 @@ const isSidebarCollapsed = ref(false);
 const isMobileMenuOpen = ref(false);
 
 onMounted(() => {
+  toolStore.loadFromLocalStorage(); 
   toolStore.applyTheme();
   checkScreenSize();
   window.addEventListener('resize', checkScreenSize);

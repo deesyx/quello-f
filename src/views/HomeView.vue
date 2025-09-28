@@ -3,7 +3,11 @@
     <div class="scroll-view">
       <!-- <h1>问题库数据看板</h1> -->
       <!--筛选区-->
-      <button @click="test">接口测试</button>
+
+
+      <!-- <button @click="test">接口测试</button> -->
+
+
       <div class="filter-container">
         <div class="filter-item">
           <label for="productLine">产品模块</label>
@@ -38,7 +42,6 @@
       <!-- 数据统计区 -->
       <section>
         <h3>整体情况</h3>
-
         <div class="stats-container">
           <div v-for="item, id in labelList" :key="id" class="stat-item">
             <div class="stat-icon">
@@ -63,7 +66,6 @@
             </div>
           </div>
         </div>
-
         <div class="charts-container">
           <!-- 说明 -->
           <!--
@@ -74,6 +76,19 @@
           <!-- <enterOverview/> -->
         </div>
       </section>
+
+      
+    <h3>问题分布</h3>
+
+    <div class="charts-container">
+      <ringChart/>
+      <barChart/>
+      <columnChart/>
+      <columnChart_Prod/>
+      <!-- <columnChart_source/>
+      <RankingReporter/> -->
+    </div>
+
 
     <h3>问题入库情况</h3>
     <!-- <div class="stats-container">
@@ -154,26 +169,10 @@
     </div>
 
 
-    <h3>问题分布</h3>
-
-    <div class="charts-container">
-      <ringChart/>
-      <barChart/>
-      <columnChart/>
-      <columnChart_Prod/>
-      <columnChart_source/>
-      <!-- <columnChart_report/> -->
-      <RankingReporter/>
-    </div>
-
 
     <h3>问题管理</h3>
 
-    <div class="charts-container">
-      <!-- <ringChart/>
-      <RankingReporter/>
-      <Ranking/> -->
-
+    <!-- <div class="charts-container">
       <div class="rate-container">
         <div class="rate-header">
           <h4>已逾期问题</h4>
@@ -188,7 +187,6 @@
               <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
                 <div>责任人：{{ issue.responsiblePerson }}</div>
-                <!-- <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div> -->
                 <div>{{ issue.plannedResolutionDate }}</div>
               </div>
             </div>
@@ -211,7 +209,6 @@
               <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
                 <div><i>user</i>{{ issue.responsiblePerson }}</div>
-                <!-- <div>{{ issue.plannedResolutionDate.toLocaleDateString('zh-CN') }}</div> -->
                 <div>{{ issue.plannedResolutionDate }}</div>
               </div>
             </div>
@@ -236,7 +233,6 @@
               <div class="rate-label">{{ issue.title }}</div>
               <div class="rate-info">
                 <div>责任人：{{ issue.responsiblePerson }}</div>
-                <!-- <div>{{ issue.createdAt.toLocaleDateString('zh-CN') }}</div> -->
                 <div>{{ issue.createdAt }}</div>
               </div>
             </div>
@@ -245,11 +241,11 @@
         </div>
       </div>
 
-    </div>
-
+    </div> -->
+<!-- 
     <div>
       <IssueTable />
-    </div>
+    </div> -->
     </div>
   </main>
 </template>
@@ -267,7 +263,7 @@ const { mode } = storeToRefs(toolStore);
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
-const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, overview, overdue, newlyAdded, overdueWarn, } = storeToRefs(dataStore);
+const { selectedProduct, products, modules, periods, selectedPeriod, dateRange, overview, overdue, newlyAdded, overdueWarn, isLoading} = storeToRefs(dataStore);
 
 
 
@@ -277,12 +273,11 @@ onBeforeMount(async () => {
 
   console.log('加载前，获取后台数据');
   try {
-    await dataStore.getPageData();
+    // await dataStore.getPageData();
     await dataStore.getDashbaordData();
   } catch (error) {
     console.error('Error loading data:', error);
   } finally {
-    loading.value = false;
   }
 });
 
@@ -324,7 +319,7 @@ watch(dateRange, async (newDateRange, oldDateRange) => {
 const onPeriodChange = async (value) => {
   console.log('Selected period:', value);
   // 在这里添加你的筛选逻辑
-  overview.value = await dataStore.getDashbaordData();
+  await dataStore.getDashbaordData();
 
 };
 

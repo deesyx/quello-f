@@ -23,6 +23,24 @@ const statusMap = {
   'CLOSED': '已关闭',
 }
 
+const severityMap = {
+  'LOW': '低',
+  'MEDIUM': '中',
+  'HIGH': '高',
+  'SERIOUS': '严重'
+}
+
+const typeMap = {
+  'FUNCTION': '功能',
+  'VISUAL': '视觉',
+  'PERFORMANCE': '性能',
+  'INTERACTION': '交互',
+  'DATA': '内容问题',
+  'LOGIC': '兼容性', // ？？？
+  'SAFE': '安全',
+  'OTHER': '其他'
+}
+
 export const useDataStore = defineStore('data', {
     state: () => ({
         //////// 筛选条件 ///////
@@ -43,33 +61,24 @@ export const useDataStore = defineStore('data', {
         // 筛选结果
         result: [], // 筛选结果
 
-        // 数据总览
-        // overview: {
-        //   totalQuestions: 0, totalQuestionsGr: 0,
-        //   adoptionRate: 0, adoptionRateGr: 0,
-        //   newQuestions: 0, newQuestionsGr: 0,
-        //   onScheduleResolutionRate: 0, onScheduleResolutionRateGr: 0,
-        //   overtimeRate: 0, overtimeRateGr: 0,
-        //   resolvedQuestions: 0, resolvedQuestionsGr: 0,
-        // },
+        isLoading: false,
 
-        status: [], // 状态分布
+        // 数据总览
+        overview: {
+          totalQuestions: 0, totalQuestionsGr: 0,
+          adoptionRate: 0, adoptionRateGr: 0,
+          newQuestions: 0, newQuestionsGr: 0,
+          onScheduleResolutionRate: 0, onScheduleResolutionRateGr: 0,
+          overtimeRate: 0, overtimeRateGr: 0,
+          resolvedQuestions: 0, resolvedQuestionsGr: 0,
+        },
 
         questionTrendData:[], // 问题趋势数据
 
-
-        // 写在一起
-        data: {
-          overview: {
-            totalQuestions: 0, totalQuestionsGr: 0,
-            adoptionRate: 0, adoptionRateGr: 0,
-            newQuestions: 0, newQuestionsGr: 0,
-            onScheduleResolutionRate: 0, onScheduleResolutionRateGr: 0,
-            overtimeRate: 0, overtimeRateGr: 0,
-            resolvedQuestions: 0, resolvedQuestionsGr: 0,
-          },
-          status: [], // 状态分布
-        },
+        status: [], // 状态分布
+        severity: [], // 严重程度分布
+        questionType: [], // 问题类型分布
+        prodModule: [], // 产品模块分布 
 
         // 问题列表
         questions:[
@@ -101,70 +110,36 @@ export const useDataStore = defineStore('data', {
         ],
     }),
     getters: {
-        // 总览
-        // totalquestions: (state) => state.questions.length,
-        // newIssue: (state) => state.questions.filter(issue => issue.status === '待评审').length,
-        // solvedIssue: (state) => state.questions.filter(issue => issue.status === '已完成').length,
-        // overdueIssue: (state) => state.questions.filter(issue => new Date(issue.plannedResolutionDate) < new Date()).length, // 这个日期比较的到时候写
-
-        // // 采纳率
-        // adopt: (state) => {
-        //   return state.questions.filter(issue => {
-        //     return issue.status !== '已关闭';
-        //   }).length / state.questions.length * 100;
-        // },
-        
-        // 状态分布
-        // status: (state) => [
-        //     { '状态': '待评审', '数量': state.questions.filter(issue => issue.status === '待评审').length },
-        //     { '状态': '待处理', '数量': state.questions.filter(issue => issue.status === '待处理').length },
-        //     { '状态': '处理中', '数量': state.questions.filter(issue => issue.status === '处理中').length },
-        //     { '状态': '已解决', '数量': state.questions.filter(issue => issue.status === '已解决').length },
-        //     { '状态': '验收中', '数量': state.questions.filter(issue => issue.status === '验收中').length },
-        //     { '状态': '已完成', '数量': state.questions.filter(issue => issue.status === '已完成').length },
-        //     { '状态': '已关闭', '数量': state.questions.filter(issue => issue.status === '已关闭').length },
+        // // 类型分布
+        // questionType: (state) => [
+        //     { '问题类型': '功能问题', '个数': state.questions.filter(issue => issue.questionType === '功能问题').length },
+        //     { '问题类型': '界面设计', '个数': state.questions.filter(issue => issue.questionType === '界面设计').length },
+        //     { '问题类型': '性能问题', '个数': state.questions.filter(issue => issue.questionType === '性能问题').length },
+        //     { '问题类型': '交互体验', '个数': state.questions.filter(issue => issue.questionType === '交互体验').length },
+        //     { '问题类型': '内容问题', '个数': state.questions.filter(issue => issue.questionType === '内容问题').length },
+        //     { '问题类型': '兼容性问题', '个数': state.questions.filter(issue => issue.questionType === '兼容性问题').length },
         // ],
 
-        overview: (state) => {
-          // console.log('调用了getter：', state.data.overview)
-          return state.data.overview;
-        },
-
-        // status: (state) => {
-        //   // console.log('调用了getter：', state.data.status)
-        //   return state.data.status;
-        // },
-
-        // 类型分布
-        questionType: (state) => [
-            { '问题类型': '功能问题', '个数': state.questions.filter(issue => issue.questionType === '功能问题').length },
-            { '问题类型': '界面设计', '个数': state.questions.filter(issue => issue.questionType === '界面设计').length },
-            { '问题类型': '性能问题', '个数': state.questions.filter(issue => issue.questionType === '性能问题').length },
-            { '问题类型': '交互体验', '个数': state.questions.filter(issue => issue.questionType === '交互体验').length },
-            { '问题类型': '内容问题', '个数': state.questions.filter(issue => issue.questionType === '内容问题').length },
-            { '问题类型': '兼容性问题', '个数': state.questions.filter(issue => issue.questionType === '兼容性问题').length },
-        ],
-
         // 严重程度分布
-        severity: (state) => [
-          { '等级': '严重', '数量': state.questions.filter(issue => issue.severity === '严重').length },
-          { '等级': '高', '数量': state.questions.filter(issue => issue.severity === '高').length },
-          { '等级': '中', '数量': state.questions.filter(issue => issue.severity === '中').length },
-          { '等级': '低', '数量': state.questions.filter(issue => issue.severity === '低').length },
-        ],
+        // severity: (state) => [
+        //   { '等级': '严重', '数量': state.questions.filter(issue => issue.severity === '严重').length },
+        //   { '等级': '高', '数量': state.questions.filter(issue => issue.severity === '高').length },
+        //   { '等级': '中', '数量': state.questions.filter(issue => issue.severity === '中').length },
+        //   { '等级': '低', '数量': state.questions.filter(issue => issue.severity === '低').length },
+        // ],
 
-        // 产品模块分布
-        prodModule: (state) => [
-          { '产品模块': '全局', '数量': state.questions.filter(issue => issue.productModule === '全局').length },
-          { '产品模块': '首页', '数量': state.questions.filter(issue => issue.productModule === '首页').length },
-          { '产品模块': '消息中心', '数量': state.questions.filter(issue => issue.productModule === '消息中心').length },
-          { '产品模块': '帮助中心', '数量': state.questions.filter(issue => issue.productModule === '帮助中心').length },
-          { '产品模块': '设置', '数量': state.questions.filter(issue => issue.productModule === '设置').length },
-          { '产品模块': '支付', '数量': state.questions.filter(issue => issue.productModule === '支付').length },
-          { '产品模块': '搜索功能', '数量': state.questions.filter(issue => issue.productModule === '搜索功能').length },
-          { '产品模块': '用户中心', '数量': state.questions.filter(issue => issue.productModule === '用户中心').length },
-          { '产品模块': '订单管理', '数量': state.questions.filter(issue => issue.productModule === '订单管理').length },
-        ],
+        // // 产品模块分布
+        // prodModule: (state) => [
+        //   { '产品模块': '全局', '数量': state.questions.filter(issue => issue.productModule === '全局').length },
+        //   { '产品模块': '首页', '数量': state.questions.filter(issue => issue.productModule === '首页').length },
+        //   { '产品模块': '消息中心', '数量': state.questions.filter(issue => issue.productModule === '消息中心').length },
+        //   { '产品模块': '帮助中心', '数量': state.questions.filter(issue => issue.productModule === '帮助中心').length },
+        //   { '产品模块': '设置', '数量': state.questions.filter(issue => issue.productModule === '设置').length },
+        //   { '产品模块': '支付', '数量': state.questions.filter(issue => issue.productModule === '支付').length },
+        //   { '产品模块': '搜索功能', '数量': state.questions.filter(issue => issue.productModule === '搜索功能').length },
+        //   { '产品模块': '用户中心', '数量': state.questions.filter(issue => issue.productModule === '用户中心').length },
+        //   { '产品模块': '订单管理', '数量': state.questions.filter(issue => issue.productModule === '订单管理').length },
+        // ],
 
         // 日期
         createdAt: (state) => {
@@ -357,6 +332,8 @@ export const useDataStore = defineStore('data', {
 
       async getDashbaordData() { 
         try {
+          this.isLoading = true;
+
           const startDate = (this.dateRange ? new Date(this.dateRange[0]).toISOString() : new Date('2020-01-01').toISOString()).substring(0, 10);
           const endDate = (this.dateRange ? new Date(this.dateRange[1]).toISOString() : new Date().toISOString()).substring(0, 10);
           // console.log('开始日期: ', startDate, '结束日期: ', endDate);
@@ -370,31 +347,51 @@ export const useDataStore = defineStore('data', {
           
           console.log('getDashboardData: ', response.data);
 
+          // 数据总览
+          this.overview = response.data.overview;
+          // console.log('总问题数：', this.overview);
 
-          // this.data = response.data;
-
-
-          this.data.overview = response.data.overview;
-          // this.overview = this.data.overview;
-          console.log('总问题数：', this.overview);
-
-          this.data.status = response.data.statusDistributions.map((item: any) => ({
+          // 状态分布
+          this.status = response.data.statusDistributions.map((item: any) => ({
             '状态': statusMap[item.key as keyof typeof statusMap],
             '数量': item.value
           }));
-          this.status = this.data.status;
-          console.log('状态分布：', this.status);
+          // console.log('状态分布：', this.status);
 
-          return response.data;
+          // 严重程度分布
+          this.severity = response.data.severityDistributions.map((item: any) => ({
+            '严重程度': severityMap[item.key as keyof typeof severityMap],
+            '数量': item.value
+          }));
+          // console.log('严重程度分布：', this.severity);
+
+          // 问题类型分布
+          this.questionType = response.data.questionTypeDistributions.map((item: any) => ({
+            '问题类型': typeMap[item.key as keyof typeof typeMap],
+            '数量': item.value
+          }));
+          // console.log('问题类型分布：', this.questionType);
+
+
+          // 产品模块分布
+          this.prodModule = response.data.productModuleDistributions;
+
+
+          // return response.data;
         } catch (error) {
           console.error('Error fetching dashboard data:', error);
           return this.overview; // Return current overview on error
+        } finally {
+          this.isLoading = false;
+          console.log('数据加载完成');
         }
       },
       
 
       async getQuestionTrendsData() { 
         try {
+          this.isLoading = true;
+
           const startDate = (this.dateRange ? new Date(this.dateRange[0]).toISOString() : new Date('2020-01-01').toISOString()).substring(0, 10);
           const endDate = (this.dateRange ? new Date(this.dateRange[1]).toISOString() : new Date().toISOString()).substring(0, 10);
           if (endDate === '1970-01-01') return this.overview;
@@ -405,20 +402,23 @@ export const useDataStore = defineStore('data', {
             period: periodMap[this.selectedTrendPeriod]
           });
 
-          this.data = response.data;
-
-
+          const data = response.data;
           
           // 映射为中文字段名
-          this.questionTrendData = response.data.map((item: any) => ({
+          this.questionTrendData = data.map((item: any) => ({
             '日期': item.time,
             '数量': item.count
           }));
-          console.log('新增问题趋势：（字段映射后）', this.questionTrendData);
-          return this.questionTrendData;
+          // console.log('新增问题趋势：（字段映射后）', this.questionTrendData);
+
+
+          // return this.questionTrendData;
         } catch (error) {
           console.error('Error fetching dashboard data:', error);
           return this.overview; // Return current overview on error
+        } finally {
+          this.isLoading = false;
+          console.log('数据加载完成');
         }
       },
     }

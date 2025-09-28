@@ -21,9 +21,9 @@ const container = ref(null);
 import { useToolStore } from '@/stores/util';
 const toolStore = useToolStore();
 const { isLight } = storeToRefs(toolStore);
-onMounted(() => {
-    chart = renderColumnChart(container.value, questionType.value, "问题类型分布", isLight.value);
-});
+// onMounted(() => {
+//     chart = renderColumnChart(container.value, questionType.value, "问题类型分布", isLight.value);
+// });
 
 onUnmounted(() => {
     // 添加检查确保图表存在再销毁
@@ -65,6 +65,21 @@ function updateBarChart(chart) {
   // 重新渲染
   chart.render();
 }
+
+watch([questionType, container], ([newQuestionType, newContainer]) => {
+    
+    if (newContainer && newQuestionType && Object.keys(newQuestionType).length > 0) {
+        try {
+            if (chart) {
+                chart.destroy();
+            }
+            chart = renderColumnChart(newContainer, newQuestionType, "问题类型分布", isLight.value);
+        } catch (error) {
+            console.error('图表渲染错误:', error);
+        }
+    }
+}, { flush: 'post' }); // Post ensures DOM is updated
+
 
 
 </script>
