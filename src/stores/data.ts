@@ -374,7 +374,10 @@ export const useDataStore = defineStore('data', {
 
 
           // 产品模块分布
-          this.prodModule = response.data.productModuleDistributions;
+          this.prodModule = response.data.productModuleDistributions.map((item: any) => ({
+            '产品模块': item.key,
+            '数量': item.value
+          }));;
 
 
           // return response.data;

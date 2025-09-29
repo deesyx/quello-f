@@ -11,7 +11,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { renderHorizontalBarChart } from '@/stores/graph';
+import { renderColumnChartHorizontal } from '@/stores/graph';
 
 import { useDataStore } from '@/stores/data';
 const dataStore = useDataStore();
@@ -54,7 +54,8 @@ watch([prodModule, container], ([newValue, newContainer]) => {
             if (chart) {
                 chart.destroy();
             }
-            chart = renderHorizontalBarChart(newContainer, newValue, "产品模块分布", isLight.value);
+            // chart = renderHorizontalBarChart(newContainer, newValue, "产品模块分布", isLight.value);
+            chart = renderColumnChartHorizontal(newContainer, newValue, "产品模块分布", isLight.value);
         } catch (error) {
             console.error('图表渲染错误:', error);
         }

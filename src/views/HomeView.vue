@@ -40,7 +40,7 @@
       </div>
       
       <!-- 数据统计区 -->
-      <section>
+      <!-- <section> -->
         <h3>整体情况</h3>
         <div class="stats-container">
           <div v-for="item, id in labelList" :key="id" class="stat-item">
@@ -75,102 +75,100 @@
           <lineChart2/>
           <!-- <enterOverview/> -->
         </div>
-      </section>
+      <!-- </section> -->
 
       
-    <h3>问题分布</h3>
+        <h3>问题分布</h3>
 
-    <div class="charts-container">
-      <ringChart/>
-      <barChart/>
-      <columnChart/>
-      <columnChart_Prod/>
-      <!-- <columnChart_source/>
-      <RankingReporter/> -->
-    </div>
-
-
-    <h3>问题入库情况</h3>
-    <!-- <div class="stats-container">
-      <div class="stat-item">
-        <div>本{{ selectedPeriod }}入库</div>
-        <div class="data">6</div>
+        <div class="charts-container">
+          <ringChart/>
+          <barChart/>
+          <columnChart/>
+          <columnChart_Prod/>
+          <!-- <columnChart_source/>
+          <RankingReporter/> -->
       </div>
-      <div class="stat-item">
-        <div>重复/高频问题</div>
-        <div class="data">12</div>
-      </div>
-    </div> -->
-    
-      <!-- <div class="dataBoard"> -->
-        <!-- <div>按参考价值</div> -->
-    <div class="stats-container">
-      <!-- <div class="board-container">
+
+
+      <h3>问题入库情况</h3>
+      <!-- <div class="stats-container">
         <div class="stat-item">
-          <div>总入库</div>
-          <div class="data">32</div>
-        </div>
-        <div class="stat-item">
-          <div>新增入库</div>
+          <div>本{{ selectedPeriod }}入库</div>
           <div class="data">6</div>
-        </div>
-        <div class="stat-item">
-          <div>优质案例占比</div>
-          <div class="data">8%</div>
         </div>
         <div class="stat-item">
           <div>重复/高频问题</div>
           <div class="data">12</div>
         </div>
       </div> -->
-      <div class="board-container">
-        
-        <div class="stat-item stat-item-width">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">总入库数</div>
-          <div class="stat-value">30</div>
-          <div class="stat-change positive">
-            <span class="change-icon">↑</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 7V17M7 12H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">新增入库</div>
-          <div class="stat-value">5</div>
-          <div class="stat-change negative">
-            <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 12L11 14L15 10M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="stat-label">优质案例占比</div>
-          <div class="stat-value">8%</div>
-          <div class="stat-change negative">
-            <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
-          </div>
-        </div>
-      </div>
-        
-      <ringChart_value/>
-      <Top10 />
       
-    </div>
+        <!-- <div class="dataBoard"> -->
+          <!-- <div>按参考价值</div> -->
+      <div class="stats-container">
+        <!-- <div class="board-container">
+          <div class="stat-item">
+            <div>总入库</div>
+            <div class="data">32</div>
+          </div>
+          <div class="stat-item">
+            <div>新增入库</div>
+            <div class="data">6</div>
+          </div>
+          <div class="stat-item">
+            <div>优质案例占比</div>
+            <div class="data">8%</div>
+          </div>
+          <div class="stat-item">
+            <div>重复/高频问题</div>
+            <div class="data">12</div>
+          </div>
+        </div> -->
+        <div class="board-container">
+          
+          <div class="stat-item">
+            <div class="stat-icon">
+              <img :src="getImageUrl('newQuestions')" alt="">
+            </div>
+            <div class="stat-label">总入库数</div>
+            <div class="stat-value">30</div>
+            <div class="stat-change positive">
+              <span class="change-icon">↑</span> 12% 较上{{ selectedPeriod }}
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 7V17M7 12H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="stat-label">新增入库</div>
+            <div class="stat-value">5</div>
+            <div class="stat-change negative">
+              <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12L11 14L15 10M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="stat-label">优质案例占比</div>
+            <div class="stat-value">8%</div>
+            <div class="stat-change negative">
+              <span class="change-icon">↓</span> 12% 较上{{ selectedPeriod }}
+            </div>
+          </div>
+        </div>
+          
+        <ringChart_value/>
+        <Top10 />
+        
+      </div>
 
 
 
-    <h3>问题管理</h3>
+    <!-- <h3>问题管理</h3> -->
 
     <!-- <div class="charts-container">
       <div class="rate-container">
@@ -248,6 +246,7 @@
     </div> -->
     </div>
   </main>
+
 </template>
 
 <script setup lang="js" name="issues">
@@ -428,6 +427,7 @@ main {
   }
 }
 
+
 // 数据统计容器 - 横向排列各项统计数据
 .stats-container, .charts-container {
   display: flex;
@@ -442,9 +442,16 @@ main {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  // 让整列卡片占1/3的宽度
+  min-width: 420px;
+  overflow: hidden;
+  height: 100%;
 }
 
+
 // 单个统计数据项
+
 .stat-item {
   display: flex;
   flex-direction: column;
@@ -485,9 +492,9 @@ main {
     position: absolute;
     top: 15px;
     right: 15px;
-    // width: 48px;
-    // height: 48px;
-    width: 20%;
+    width: 42px;
+    height: 42px;
+    // width: 20%;
     padding: 10px 12px;
     background-color: var(--icon-bg-color);
     border-radius: 12px;
@@ -495,11 +502,12 @@ main {
     align-items: center;
     justify-content: center;
     img {
-      width: 18px;
-      width: 100%;
+      width: 16px;
+      // width: 100%;
     }
   }
 }
+
 
 .stat-item-width {
   min-width: 300px;

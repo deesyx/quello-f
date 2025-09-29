@@ -108,6 +108,52 @@ export function renderColumnChart(container: any, data: any, title: string, them
 }
 
 
+export function renderColumnChartHorizontal(container: any, data: any, title: string, theme: boolean) {
+  
+  const keys = Object.keys(data[0]);
+  const x = keys[0];
+  const y = keys[1];
+
+  const chart = new Chart({
+    container,
+    autoFit: true,
+    height: 360,
+  });
+
+  // 声明可视化
+  chart.options({
+    theme: theme ? 'light' : 'dark',
+    type: 'interval',
+    title: {
+      title,
+    //   subtitle: '副标题',
+    },
+    encode: { x, y, key: x },
+    data,
+    // xField: 'genre',
+    // yField: 'sold',
+    scale: {
+      color: {
+          independent: true // Make color independent of data
+      }
+    },
+    style: {
+        fill: '#00A971' // Set the specific color
+    },
+    coordinate: { 
+      transform: [{ type: 'transpose' }] // 转置坐标系实现横向效果
+    },
+    animate: {
+      update: { duration: 300, easing: 'easeQuadInOut' }
+    }
+  });
+
+  // 渲染可视化
+  chart.render();
+
+  return chart;
+}
+
 export function renderBarChart(container: any, data: any, title: string, theme: boolean) {
 
     const colors = ['#00A971', '#4EC49C', '#A6DA73', '#E9C662'];
